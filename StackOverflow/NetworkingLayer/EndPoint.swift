@@ -1,5 +1,4 @@
 import Foundation
-
 // Encoding
 protocol EndPointType {
     var baseUrl: URL { get }

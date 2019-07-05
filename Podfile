@@ -8,4 +8,5 @@ target 'StackOverflow' do
   # Pods for StackOverflow
   pod 'SwiftLint'
   pod 'Alamofire'
+  pod 'Moya'
 end
