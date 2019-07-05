@@ -167,7 +167,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/QuestionAnswerPageVC.swift"
-            timestampString = "582843464.722042"
+            timestampString = "584060830.419034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
@@ -183,7 +183,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/QuestionAnswerPageVC.swift"
-            timestampString = "582843464.722108"
+            timestampString = "584060830.419499"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
@@ -199,7 +199,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/QuestionAnswerPageVC.swift"
-            timestampString = "582843464.722172"
+            timestampString = "584060830.419789"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -279,11 +279,75 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/NetworkingLayer/NetworkManager.swift"
-            timestampString = "583803456.41187"
+            timestampString = "584060830.420137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getAllQuestions(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StackOverflow/NetworkingLayer/NetworkManager.swift"
+            timestampString = "584060830.420203"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "getAllQuestions(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Result.Result&lt;Moya.Response, Moya.MoyaError&gt;) -&gt; () in StackOverflow.NetworkManager.getAllQuestions(completion: (Swift.Optional&lt;StackOverflow.AllQuestions&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StackOverflow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Minimac/Desktop/StackOverflow/StackOverflow/StackOverflow/NetworkingLayer/NetworkManager.swift"
+                  timestampString = "584056976.394269"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "284">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Result.Result&lt;Moya.Response, Moya.MoyaError&gt;) -&gt; () in StackOverflow.NetworkManager.getAllQuestions(completion: (Swift.Optional&lt;StackOverflow.AllQuestions&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "StackOverflow"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Minimac/Desktop/StackOverflow/StackOverflow/StackOverflow/NetworkingLayer/NetworkManager.swift"
+                  timestampString = "584056976.397615"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "288">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StackOverflow/NetworkingLayer/NetworkManager.swift"
+            timestampString = "584060830.4202631"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
             landmarkName = "getAllQuestions(completion:)"
             landmarkType = "7">
          </BreakpointContent>
