@@ -20,13 +20,7 @@ class QuestionAnswerPageVC: UIViewController {
         networkManager.getQuestion(with: questionId)
             .then { [weak self] qData -> Promise<Answers> in
                 guard let strongSelf = self else {
-                    return Promise<Answers>() { seal in
-                        let err = NSError(
-                            domain: "WeatherOrNot",
-                            code: 0,
-                            userInfo: [NSLocalizedDescriptionKey: "method not yet implemented."])
-                        seal.reject(err)
-                    }
+                    return UIViewController.brokenPromise()
                 }
                 strongSelf.questionData = qData
                 return strongSelf.networkManager.getAnswersOfQuestion(with: strongSelf.questionId)
@@ -71,17 +65,6 @@ class QuestionAnswerPageVC: UIViewController {
     @objc func backButtonPressed(sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
-    func brokenPromise<T>(method: String = #function) -> Promise<T> {
-        return Promise<T>() { seal in
-            let err = NSError(
-                domain: "WeatherOrNot",
-                code: 0,
-                userInfo: [NSLocalizedDescriptionKey: "'\(method)' not yet implemented."])
-            seal.reject(err)
-        }
-    }
-
 }
 
 extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {

@@ -1,25 +1,11 @@
 import UIKit
+import PromiseKit
 extension JSONDecoder {
     func convertFromSnakeCase() -> JSONDecoder {
         self.keyDecodingStrategy = .convertFromSnakeCase
         return self
     }
 }
-
-//extension Question.AllItems {
-//    private struct MoreComments {
-//        static var showMoreComments: Bool = false
-//    }
-//
-//    var showMoreComments: Bool {
-//        get {
-//            return MoreComments.showMoreComments
-//        }
-//        set(newValue) {
-//            MoreComments.showMoreComments = newValue
-//        }
-//    }
-//}
 
 extension Comment {
     func commentView(userId: Int, clickListener: @escaping ((Int) -> Void)) -> UIView {
@@ -94,6 +80,17 @@ extension UILabel {
         }
         set(newValue) {
             UserLink.link = newValue
+        }
+    }
+}
+extension UIViewController {
+    static func brokenPromise<T>(method: String = #function) -> Promise<T> {
+        return Promise<T>() { seal in
+            let err = NSError(
+                domain: "WeatherOrNot",
+                code: 0,
+                userInfo: [NSLocalizedDescriptionKey: "'\(method)' not yet implemented."])
+            seal.reject(err)
         }
     }
 }
