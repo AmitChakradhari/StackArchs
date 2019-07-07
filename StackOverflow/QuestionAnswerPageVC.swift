@@ -1,5 +1,5 @@
 import UIKit
-
+import PromiseKit
 class QuestionAnswerPageVC: UIViewController {
 
     var networkManager: NetworkManager!
@@ -17,19 +17,25 @@ class QuestionAnswerPageVC: UIViewController {
         addBackButton()
         view.backgroundColor = .white
         networkManager = NetworkManager()
-        networkManager.getQuestion(with: questionId) { [weak self] data, error in
-            guard error == nil else { return }
-            self?.questionData = data
-//            DispatchQueue.main.async {
-//                self?.tableView.reloadData()
-//            }
-            self?.networkManager.getAnswersOfQuestion(with: self?.questionId ?? 0) { data, error in
-                guard error == nil else { return }
-                self?.answersData = data
-                DispatchQueue.main.async {
-                    self?.tableView.reloadData()
+        networkManager.getQuestion(with: questionId)
+            .then { [weak self] qData -> Promise<Answers> in
+                guard let strongSelf = self else {
+                    return Promise<Answers>() { seal in
+                        let err = NSError(
+                            domain: "WeatherOrNot",
+                            code: 0,
+                            userInfo: [NSLocalizedDescriptionKey: "method not yet implemented."])
+                        seal.reject(err)
+                    }
                 }
-            }
+                strongSelf.questionData = qData
+                return strongSelf.networkManager.getAnswersOfQuestion(with: strongSelf.questionId)
+            }.done { [weak self] ansData in
+                self?.answersData = ansData
+            }.ensure { [weak self] in
+                self?.tableView.reloadData()
+            }.catch { error in
+                print("error: \(error.localizedDescription)")
         }
     }
 
@@ -64,6 +70,16 @@ class QuestionAnswerPageVC: UIViewController {
 
     @objc func backButtonPressed(sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+
+    func brokenPromise<T>(method: String = #function) -> Promise<T> {
+        return Promise<T>() { seal in
+            let err = NSError(
+                domain: "WeatherOrNot",
+                code: 0,
+                userInfo: [NSLocalizedDescriptionKey: "'\(method)' not yet implemented."])
+            seal.reject(err)
+        }
     }
 
 }

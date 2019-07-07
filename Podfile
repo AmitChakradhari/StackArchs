@@ -9,4 +9,5 @@ target 'StackOverflow' do
   pod 'SwiftLint'
   pod 'Alamofire'
   pod 'Moya'
+  pod 'PromiseKit'
 end

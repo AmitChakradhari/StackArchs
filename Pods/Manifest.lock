@@ -5,27 +5,39 @@ PODS:
   - Moya/Core (12.0.1):
     - Alamofire (~> 4.1)
     - Result (~> 4.0)
+  - PromiseKit (6.7.0):
+    - PromiseKit/CorePromise (= 6.7.0)
+    - PromiseKit/Foundation (= 6.7.0)
+    - PromiseKit/UIKit (= 6.7.0)
+  - PromiseKit/CorePromise (6.7.0)
+  - PromiseKit/Foundation (6.7.0):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.7.0):
+    - PromiseKit/CorePromise
   - Result (4.0.0)
   - SwiftLint (0.29.1)
 
 DEPENDENCIES:
   - Alamofire
   - Moya
+  - PromiseKit
   - SwiftLint
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Moya
+    - PromiseKit
     - Result
     - SwiftLint
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   Moya: cf730b3cd9e005401ef37a85143aa141a12fd38f
+  PromiseKit: 453ddcc947fe7b302f3ef41882b81d31c554df7f
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SwiftLint: 6772320e40b52049053a518c17db9b0634a0b45a
 
-PODFILE CHECKSUM: ee0ad21a88ef8c2e8571942430e5e99a40c2e957
+PODFILE CHECKSUM: c1d58c58b32dcb04941a31541d8624f7be8f281b
 
 COCOAPODS: 1.5.3

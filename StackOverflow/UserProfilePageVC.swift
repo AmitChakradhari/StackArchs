@@ -1,5 +1,5 @@
 import UIKit
-
+import PromiseKit
 class UserProfilePageViewController: UIViewController {
 
     var networkManager: NetworkManager!
@@ -21,19 +21,21 @@ class UserProfilePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         networkManager = NetworkManager()
-        networkManager.getUser(with: userId) { [weak self] data, error in
-            guard error == nil else { return }
-            self?.user = data
-            if let imageUrl = URL(string: self?.user.items[0].profileImage ?? "") {
-                DispatchQueue.main.async {
-                    self?.imageView.image = try? UIImage(data: Data(contentsOf: imageUrl))
-                    self?.reputationLabel.text = "Reputation - \(self?.user.items[0].reputation ?? 0)"
-                    for view in self?.getBadges(badges: self?.user.items[0].badgeCounts) ?? [] {
-                        self?.badgeStackView.addArrangedSubview(view)
-                    }
+        networkManager.getUser(with: userId)
+            .done { [weak self] user in
+                self?.user = user
+            }.done(on: .main) { [weak self] in
+                if let imageUrl = URL(string: self?.user.items[0].profileImage ?? "") {
+                        self?.imageView.image = try? UIImage(data: Data(contentsOf: imageUrl))
+                        self?.reputationLabel.text = "Reputation - \(self?.user.items[0].reputation ?? 0)"
+                        for view in self?.getBadges(badges: self?.user.items[0].badgeCounts) ?? [] {
+                            self?.badgeStackView.addArrangedSubview(view)
+                        }
                 }
-            }
+            }.catch { error in
+                print("error: \(error.localizedDescription)")
         }
+
         addBackButton()
         view.backgroundColor = .purple
         view.addSubview(profileView)

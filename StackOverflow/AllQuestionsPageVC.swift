@@ -1,5 +1,5 @@
 import UIKit
-
+import PromiseKit
 class AllQuestionsPage: UIViewController {
 
     var networkManager: NetworkManager!
@@ -12,14 +12,14 @@ class AllQuestionsPage: UIViewController {
 
         setUpTableView()
         networkManager = NetworkManager()
-        networkManager.getAllQuestions { data, error in
-            guard error == nil else { return }
-            self.allQuestions = data
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        networkManager.getAllQuestions()
+            .done { [weak self] allQuestion in
+            self?.allQuestions = allQuestion
+            }.done { [weak self] in
+                self?.tableView.reloadData()
+            }.catch { error in
+                print("error: \(error.localizedDescription)")
         }
-        // Do any additional setup after loading the view.
     }
 
     func setUpTableView() {
