@@ -1,5 +1,6 @@
 import UIKit
 import PromiseKit
+
 extension JSONDecoder {
     func convertFromSnakeCase() -> JSONDecoder {
         self.keyDecodingStrategy = .convertFromSnakeCase
@@ -83,6 +84,7 @@ extension UILabel {
         }
     }
 }
+
 extension UIViewController {
     static func brokenPromise<T>(method: String = #function) -> Promise<T> {
         return Promise<T>() { seal in
