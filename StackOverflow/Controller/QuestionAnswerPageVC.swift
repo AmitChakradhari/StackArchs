@@ -41,17 +41,13 @@ class QuestionAnswerPageVC: UIViewController {
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
-        let questionAnswerPageView = QuestioAnswerPageView(tableViewFrame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
+        let questionAnswerPageView = QuestionAnswerPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
         tableView = questionAnswerPageView.tableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
         tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
-        view.addSubview(tableView)
-
-        backButton = questionAnswerPageView.backButton
-        view.addSubview(backButton)
-        view.bringSubviewToFront(backButton)
+        view.addSubview(questionAnswerPageView)
     }
 
     @objc func backButtonPressed(sender: UIButton) {
@@ -146,7 +142,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                     let userId: Int = comments[ids].owner?.userId ?? 0
                     sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
                 }
-                //cell.commentsStackView.moreCommentsButton.isHidden = false
+                cell.commentsStackView.moreCommentsButton.isHidden = true
                 //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
                 cell.commentsStackView.moreCommentsButton.commentStackView = cell.commentsStackView
                 cell.commentsStackView.moreCommentsButton.comments = comments
@@ -211,5 +207,43 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
             self?.modalTransitionStyle = .flipHorizontal
             self?.showDetailViewController(userProfilePage, sender: self)
         })
+    }
+}
+
+extension Comment {
+    func commentView(userId: Int, clickListener: @escaping ((Int) -> Void)) -> UIView {
+        let view = UIView()
+        view.backgroundColor = UIColor.green
+        let comment = CommentLabel()
+        comment.clickListener = clickListener
+        comment.userID = userId
+        comment.translatesAutoresizingMaskIntoConstraints = false
+        comment.numberOfLines = 0
+        let str = "\(self.bodyMarkdown)-\(self.owner?.displayName ?? "Anonymous")"
+        comment.text = str
+        comment.isUserInteractionEnabled = true
+
+        comment.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(sender:))))
+
+        view.addSubview(comment)
+        NSLayoutConstraint.activate([
+            comment.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            comment.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            comment.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            comment.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            comment.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            comment.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0)
+            ])
+
+        return view
+    }
+    @objc func handleClick(sender: UITapGestureRecognizer) {
+        if let view = (sender.view as? CommentLabel), let userId = view.userID, let listener = view.clickListener {
+            listener(userId)
+        }
+    }
+    class CommentLabel: UILabel {
+        var clickListener: ((Int) -> Void)?
+        var userID: Int?
     }
 }

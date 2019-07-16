@@ -1,18 +1,19 @@
-//
-//  AllQuestionsPageView.swift
-//  StackOverflow
-//
-//  Created by Tricon Infotech on 16/07/19.
-//  Copyright © 2019 Tricon Infotech. All rights reserved.
-//
-
 import UIKit
-class AllQuestionPageView {
-    var tableView: UITableView
+class AllQuestionPageView: UIView {
 
-    init(tableViewFrame: CGRect) {
-        tableView = UITableView(frame: tableViewFrame, style: .plain)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        tableView.frame = frame
+        addSubview(tableView)
+    }
+    let tableView : UITableView = {
+        let tableView = UITableView()
         tableView.estimatedRowHeight = 150
         tableView.rowHeight = UITableView.automaticDimension
+        return tableView
+    }()
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
