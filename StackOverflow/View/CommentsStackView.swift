@@ -46,30 +46,10 @@ class CommentsStackView: UIStackView {
         btn.tag = 11
         btn.setTitle("show more comments", for: .normal)
         btn.setTitleColor(.blue, for: .normal)
-        btn.addTarget(nil, action: #selector(moreCommentsButtonPressed), for: .touchUpInside)
+        //btn.addTarget(self, action: #selector(moreCommentsButtonPressed), for: .touchUpInside)
+        btn.addTarget(nil, action: #selector(QuestionAnswerPageVC.moreCommentsButtonPressed(_:)), for: .touchUpInside)
         return btn
     }()
-
-    @objc func moreCommentsButtonPressed(sender: UIButton) {
-        switch sender.tag {
-        case 11:
-            sender.setTitle("hide comments", for: .normal)
-            sender.tag = 12
-            //showMoreComments(sender: sender)
-            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
-            guard let indexPath = tableView.indexPath(for: cell) else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        case 12:
-            sender.setTitle("show more comments", for: .normal)
-            sender.tag = 11
-            //hideComments(sender: sender)
-            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
-            guard let indexPath = tableView.indexPath(for: cell) else { return }
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        default:
-            break
-        }
-    }
 
 //    func showMoreComments(sender: UIButton) {
 //        guard !sender.comments.isEmpty else { return }

@@ -4,6 +4,7 @@ class QuestionAnswerPageVC: UIViewController {
 
     var networkManager: NetworkManager!
     var tableView: UITableView!
+    var backButton: UIButton!
     var questionId: Int!
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
@@ -13,8 +14,7 @@ class QuestionAnswerPageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTableView()
-        addBackButton()
+        setupView()
         view.backgroundColor = .white
         networkManager = NetworkManager()
         networkManager.getQuestion(with: questionId)
@@ -37,33 +37,46 @@ class QuestionAnswerPageVC: UIViewController {
         super.viewDidAppear(animated)
     }
 
-    func setupTableView() {
+    func setupView() {
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
-
-        tableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight), style: .plain)
+        let questionAnswerPageView = QuestioAnswerPageView(tableViewFrame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
+        tableView = questionAnswerPageView.tableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
         tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
-        tableView.estimatedRowHeight = 200
-        tableView.rowHeight = UITableView.automaticDimension
         view.addSubview(tableView)
-    }
 
-    func addBackButton() {
-        let backButton = UIButton()
-        backButton.setTitle("<-", for: .normal)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.frame = CGRect(x: 10, y: 20, width: 44, height: 44)
-        backButton.addTarget(self, action: #selector(backButtonPressed), for: .touchUpInside)
+        backButton = questionAnswerPageView.backButton
         view.addSubview(backButton)
         view.bringSubviewToFront(backButton)
     }
 
     @objc func backButtonPressed(sender: UIButton) {
         dismiss(animated: true, completion: nil)
+    }
+
+    @objc func moreCommentsButtonPressed(_ sender: UIButton) {
+        switch sender.tag {
+        case 11:
+            sender.setTitle("hide comments", for: .normal)
+            sender.tag = 12
+            //showMoreComments(sender: sender)
+            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
+            guard let indexPath = tableView.indexPath(for: cell) else { return }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        case 12:
+            sender.setTitle("show more comments", for: .normal)
+            sender.tag = 11
+            //hideComments(sender: sender)
+            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
+            guard let indexPath = tableView.indexPath(for: cell) else { return }
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        default:
+            break
+        }
     }
 }
 
@@ -133,7 +146,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                     let userId: Int = comments[ids].owner?.userId ?? 0
                     sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
                 }
-                cell.commentsStackView.moreCommentsButton.isHidden = true
+                //cell.commentsStackView.moreCommentsButton.isHidden = false
                 //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
                 cell.commentsStackView.moreCommentsButton.commentStackView = cell.commentsStackView
                 cell.commentsStackView.moreCommentsButton.comments = comments

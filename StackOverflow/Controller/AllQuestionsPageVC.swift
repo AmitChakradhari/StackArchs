@@ -23,16 +23,15 @@ class AllQuestionsPage: UIViewController {
     }
 
     func setUpTableView() {
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        let barHeight: CGFloat = UIApplication.shared  .statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
 
-        tableView = UITableView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight), style: .plain)
+        let allQuestionPageView =  AllQuestionPageView(tableViewFrame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight))
+        tableView = allQuestionPageView.tableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(AllQuestionsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.estimatedRowHeight = 150
-        tableView.rowHeight = UITableView.automaticDimension
         view.addSubview(tableView)
     }
 

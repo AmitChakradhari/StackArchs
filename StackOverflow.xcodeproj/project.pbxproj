@@ -25,6 +25,9 @@
 		7DA1DCA122B3B217001527F9 /* CommentsStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1DCA022B3B217001527F9 /* CommentsStackView.swift */; };
 		7DA1DCC322BC42E2001527F9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1DCC222BC42E2001527F9 /* Extensions.swift */; };
 		7DA1DCC722BD08AD001527F9 /* UserProfilePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1DCC622BD08AD001527F9 /* UserProfilePageVC.swift */; };
+		7DA82D1D22DD3DF40056A8FA /* QuestionAnswerPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D1C22DD3DF40056A8FA /* QuestionAnswerPageView.swift */; };
+		7DA82D1F22DD489C0056A8FA /* AllQuestionsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D1E22DD489C0056A8FA /* AllQuestionsPageView.swift */; };
+		7DA82D2122DD54900056A8FA /* UserProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D2022DD54900056A8FA /* UserProfilePageView.swift */; };
 		DD0E53C9F74310373A757646 /* Pods_StackOverflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A776AE0FB16DFFEA4100A088 /* Pods_StackOverflow.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +52,9 @@
 		7DA1DCA022B3B217001527F9 /* CommentsStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsStackView.swift; sourceTree = "<group>"; };
 		7DA1DCC222BC42E2001527F9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7DA1DCC622BD08AD001527F9 /* UserProfilePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageVC.swift; sourceTree = "<group>"; };
+		7DA82D1C22DD3DF40056A8FA /* QuestionAnswerPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerPageView.swift; sourceTree = "<group>"; };
+		7DA82D1E22DD489C0056A8FA /* AllQuestionsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuestionsPageView.swift; sourceTree = "<group>"; };
+		7DA82D2022DD54900056A8FA /* UserProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageView.swift; sourceTree = "<group>"; };
 		9D571048D3532A2EDFE38F98 /* Pods-StackOverflow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StackOverflow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StackOverflow/Pods-StackOverflow.debug.xcconfig"; sourceTree = "<group>"; };
 		A776AE0FB16DFFEA4100A088 /* Pods_StackOverflow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StackOverflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD56A5FBF80F4273B1EE0BA9 /* Pods-StackOverflow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StackOverflow.release.xcconfig"; path = "Pods/Target Support Files/Pods-StackOverflow/Pods-StackOverflow.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +150,9 @@
 				7D23934022A9C90A00879245 /* CommentsTableViewCell.swift */,
 				7D085BF422B17C3600BCF59D /* EditedAnsweredView.swift */,
 				7DA1DCA022B3B217001527F9 /* CommentsStackView.swift */,
+				7DA82D1C22DD3DF40056A8FA /* QuestionAnswerPageView.swift */,
+				7DA82D1E22DD489C0056A8FA /* AllQuestionsPageView.swift */,
+				7DA82D2022DD54900056A8FA /* UserProfilePageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +319,9 @@
 				7D085BF722B197CE00BCF59D /* Utilities.swift in Sources */,
 				7D7639EB22A47263007C2E1F /* NetworkManager.swift in Sources */,
 				7D2B3CBD22A71EB80056D061 /* AnswerTableViewCell.swift in Sources */,
+				7DA82D1F22DD489C0056A8FA /* AllQuestionsPageView.swift in Sources */,
+				7DA82D1D22DD3DF40056A8FA /* QuestionAnswerPageView.swift in Sources */,
+				7DA82D2122DD54900056A8FA /* UserProfilePageView.swift in Sources */,
 				7DA1DCC722BD08AD001527F9 /* UserProfilePageVC.swift in Sources */,
 				7DA1DCA122B3B217001527F9 /* CommentsStackView.swift in Sources */,
 				7D7639ED22A5BEB8007C2E1F /* AllQuestionsTableViewCell.swift in Sources */,
