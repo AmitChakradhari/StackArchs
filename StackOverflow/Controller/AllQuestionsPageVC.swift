@@ -51,7 +51,7 @@ extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
         let items = allQuestions.items
         cell.questionTitle.text = items[indexPath.row].title
         cell.questionTag.text = items[indexPath.row].tags.joined(separator: ", ")
-        cell.createdDate.text = Utility.getDate(items[indexPath.row].creationDate)
+        cell.createdDate.text = DateUtilities.getDate(items[indexPath.row].creationDate)
         cell.layoutIfNeeded()
         return cell
     }

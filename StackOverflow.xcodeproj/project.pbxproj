@@ -89,6 +89,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7D00144722E13B540055A718 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		7D7639C522A314CF007C2E1F = {
 			isa = PBXGroup;
 			children = (
@@ -110,9 +117,11 @@
 		7D7639D022A314CF007C2E1F /* StackOverflow */ = {
 			isa = PBXGroup;
 			children = (
+				7D7639D122A314CF007C2E1F /* AppDelegate.swift */,
 				7DA82D1822D68CFC0056A8FA /* Model */,
 				7DA82D1922D68D0B0056A8FA /* View */,
 				7DA82D1A22D68D150056A8FA /* Controller */,
+				7D00144722E13B540055A718 /* ViewModel */,
 				7D7639D822A314D2007C2E1F /* Assets.xcassets */,
 				7D7639DA22A314D2007C2E1F /* LaunchScreen.storyboard */,
 				7D7639DD22A314D2007C2E1F /* Info.plist */,
@@ -160,7 +169,6 @@
 		7DA82D1A22D68D150056A8FA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7D7639D122A314CF007C2E1F /* AppDelegate.swift */,
 				7D7639D322A314CF007C2E1F /* AllQuestionsPageVC.swift */,
 				7D2B3CBE22A71EEB0056D061 /* QuestionAnswerPageVC.swift */,
 				7DA1DCC622BD08AD001527F9 /* UserProfilePageVC.swift */,

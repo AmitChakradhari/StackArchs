@@ -24,6 +24,7 @@ class UserProfilePageViewController: UIViewController {
             .done { [weak self] user in
                 self?.user = user
             }.done(on: .main) { [weak self] in
+                
                 if let imageUrl = URL(string: self?.user.items[0].profileImage ?? "") {
                     self?.userProfilePageView.imageView.image = try? UIImage(data: Data(contentsOf: imageUrl))
                     self?.userProfilePageView.reputationLabel.text = "Reputation - \(self?.user.items[0].reputation ?? 0)"

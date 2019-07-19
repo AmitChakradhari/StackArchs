@@ -104,7 +104,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                 cell.questionDetail.text = item.bodyMarkdown
 
                 // answered is asked
-                cell.answeredView.editedAnsweredLabel.text = "asked \(Utility.getDate(item.creationDate))"
+                cell.answeredView.editedAnsweredLabel.text = "asked \(DateUtilities.getDate(item.creationDate))"
                 cell.answeredView.userName.text = item.owner.displayName
                 cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: item.owner.profileImage ?? "")!))
 
@@ -114,7 +114,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
 
                 if let lastEditor = item.lastEditor {
                     cell.editedView.isHidden = false
-                    cell.editedView.editedAnsweredLabel.text = "edited \(Utility.getDate(item.lastActivityDate))"
+                    cell.editedView.editedAnsweredLabel.text = "edited \(DateUtilities.getDate(item.lastActivityDate))"
                     cell.editedView.userName.text = lastEditor.displayName
                     cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: lastEditor.profileImage ?? "")!))
 
@@ -166,7 +166,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
             if !indexPath.row.isMultiple(of: 2) {
                 cell.contentView.backgroundColor = .lightGray
             }
-            cell.answeredView.editedAnsweredLabel.text = "answered \(Utility.getDate(item.creationDate))"
+            cell.answeredView.editedAnsweredLabel.text = "answered \(DateUtilities.getDate(item.creationDate))"
             cell.answeredView.userName.text = item.owner.displayName ?? ""
             if let imageUrl = URL(string: item.owner.profileImage ?? "") {
                 cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: imageUrl))
@@ -176,7 +176,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
 
             if let lastEditor = item.lastEditor {
                 cell.editedView.isHidden = false
-                cell.editedView.editedAnsweredLabel.text = "edited \(Utility.getDate(item.lastEditDate ?? 0))"
+                cell.editedView.editedAnsweredLabel.text = "edited \(DateUtilities.getDate(item.lastEditDate ?? 0))"
                 cell.editedView.userName.text = lastEditor.displayName
                 cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: lastEditor.profileImage ?? "")!))
 
