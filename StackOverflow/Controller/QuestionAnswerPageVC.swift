@@ -10,12 +10,14 @@ class QuestionAnswerPageVC: UIViewController {
     let answerCellIdentifier = "answerCell"
     var questionData: Question!
     var answersData: Answers!
+    var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+
+        questionAnswerPageViewModel = QuestionAnswerPageViewModel(vc: self)
         setupView()
-        view.backgroundColor = .white
         networkManager = NetworkManager()
         networkManager.getQuestion(with: questionId)
             .then { [weak self] qData -> Promise<Answers> in
@@ -38,16 +40,12 @@ class QuestionAnswerPageVC: UIViewController {
     }
 
     func setupView() {
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height
-        let questionAnswerPageView = QuestionAnswerPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
-        tableView = questionAnswerPageView.tableView
+        let questionAnswerPageView = questionAnswerPageViewModel.questionAnswerPageView!
+        tableView = questionAnswerPageViewModel.tableView
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
-        tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
         view.addSubview(questionAnswerPageView)
+        view.backgroundColor = .white
     }
 
     @objc func backButtonPressed(sender: UIButton) {
@@ -60,14 +58,14 @@ class QuestionAnswerPageVC: UIViewController {
             sender.setTitle("hide comments", for: .normal)
             sender.tag = 12
             //showMoreComments(sender: sender)
-            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
+            guard let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
             guard let indexPath = tableView.indexPath(for: cell) else { return }
             tableView.reloadRows(at: [indexPath], with: .automatic)
         case 12:
             sender.setTitle("show more comments", for: .normal)
             sender.tag = 11
             //hideComments(sender: sender)
-            guard let tableView = sender.commentStackView.superview!.superview!.superview as? UITableView, let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
+            guard let cell = sender.commentStackView.superview!.superview as? QuestionTableViewCell else { return }
             guard let indexPath = tableView.indexPath(for: cell) else { return }
             tableView.reloadRows(at: [indexPath], with: .automatic)
         default:
@@ -128,16 +126,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                 guard let commentsCount = count, let comments = item.comments else { return cell }
                 guard commentsCount > 0 else { return cell }
                 guard let sv = cell.commentsStackView.subviews[0] as? UIStackView else { return cell }
-//                if commentsCount > 3 {
-//                    for ids in 0...2 {
-//
-//                        sv.addArrangedSubview(item.comments[ids].commentView())
-//                    }
-//                } else {
-//                    for ids in 0...commentsCount-1 {
-//                        sv.addArrangedSubview(item.comments[ids].commentView())
-//                    }
-//                }
+
                 for ids in 0...commentsCount-1 {
                     let userId: Int = comments[ids].owner?.userId ?? 0
                     sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))

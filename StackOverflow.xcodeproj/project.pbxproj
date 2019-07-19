@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D00144922E26D0C0055A718 /* QuestionAnswerPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */; };
 		7D085BF522B17C3600BCF59D /* EditedAnsweredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D085BF422B17C3600BCF59D /* EditedAnsweredView.swift */; };
 		7D085BF722B197CE00BCF59D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D085BF622B197CE00BCF59D /* Utilities.swift */; };
 		7D23934122A9C90A00879245 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D23934022A9C90A00879245 /* CommentsTableViewCell.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerPageViewModel.swift; sourceTree = "<group>"; };
 		7D085BF422B17C3600BCF59D /* EditedAnsweredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedAnsweredView.swift; sourceTree = "<group>"; };
 		7D085BF622B197CE00BCF59D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		7D23934022A9C90A00879245 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		7D00144722E13B540055A718 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				7DA82D1D22DD3DF40056A8FA /* QuestionAnswerPageView.swift in Sources */,
 				7DA82D2122DD54900056A8FA /* UserProfilePageView.swift in Sources */,
 				7DA1DCC722BD08AD001527F9 /* UserProfilePageVC.swift in Sources */,
+				7D00144922E26D0C0055A718 /* QuestionAnswerPageViewModel.swift in Sources */,
 				7DA1DCA122B3B217001527F9 /* CommentsStackView.swift in Sources */,
 				7D7639ED22A5BEB8007C2E1F /* AllQuestionsTableViewCell.swift in Sources */,
 				7D7639EF22A5D003007C2E1F /* Constants.swift in Sources */,
