@@ -19,3 +19,5 @@ class QuestionAnswerPageViewModel {
         tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
     }
 }
+
+

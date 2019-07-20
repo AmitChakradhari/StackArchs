@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D00144922E26D0C0055A718 /* QuestionAnswerPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */; };
+		7D00144B22E283700055A718 /* QuestionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D00144A22E283700055A718 /* QuestionCellViewModel.swift */; };
 		7D085BF522B17C3600BCF59D /* EditedAnsweredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D085BF422B17C3600BCF59D /* EditedAnsweredView.swift */; };
 		7D085BF722B197CE00BCF59D /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D085BF622B197CE00BCF59D /* Utilities.swift */; };
 		7D23934122A9C90A00879245 /* CommentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D23934022A9C90A00879245 /* CommentsTableViewCell.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerPageViewModel.swift; sourceTree = "<group>"; };
+		7D00144A22E283700055A718 /* QuestionCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionCellViewModel.swift; sourceTree = "<group>"; };
 		7D085BF422B17C3600BCF59D /* EditedAnsweredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditedAnsweredView.swift; sourceTree = "<group>"; };
 		7D085BF622B197CE00BCF59D /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		7D23934022A9C90A00879245 /* CommentsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsTableViewCell.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				7D00144822E26D0C0055A718 /* QuestionAnswerPageViewModel.swift */,
+				7D00144A22E283700055A718 /* QuestionCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D7639E722A430D6007C2E1F /* Model.swift in Sources */,
+				7D00144B22E283700055A718 /* QuestionCellViewModel.swift in Sources */,
 				7D2B3CBF22A71EEB0056D061 /* QuestionAnswerPageVC.swift in Sources */,
 				7D2B3CBB22A71E7B0056D061 /* QuestionTableViewCell.swift in Sources */,
 				7D7639D422A314CF007C2E1F /* AllQuestionsPageVC.swift in Sources */,

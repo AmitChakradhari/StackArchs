@@ -11,6 +11,7 @@ class QuestionAnswerPageVC: UIViewController {
     var questionData: Question!
     var answersData: Answers!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
+    lazy var questionCellViewModel = QuestionCellViewModel(questionData: questionData)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,28 +98,19 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
             }
 
             if let item = questionData.items.first {
-                //cell.comments = item.comments ?? 0
-                cell.questionTitle.text = item.title
-                cell.questionDetail.text = item.bodyMarkdown
+                cell.questionTitle.text = questionCellViewModel.questionTitle
+                cell.questionDetail.text = questionCellViewModel.questionDetail
+                cell.answeredView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
+                cell.answeredView.userName.text = questionCellViewModel.answeredViewUserName
+                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.answeredViewImageUrlString)!))
+                cell.answeredView.badges.text = questionCellViewModel.answeredViewBadgesText
 
-                // answered is asked
-                cell.answeredView.editedAnsweredLabel.text = "asked \(DateUtilities.getDate(item.creationDate))"
-                cell.answeredView.userName.text = item.owner.displayName
-                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: item.owner.profileImage ?? "")!))
-
-                let badgeCounts = item.owner.badgeCounts ?? BadgeCount(bronze: 0, silver: 0, gold: 0)
-
-                cell.answeredView.badges.text = "\( item.owner.reputation ?? 0)\u{1F538}\(badgeCounts.gold)\u{1F539}\(badgeCounts.silver)\u{1F53A}\(badgeCounts.bronze)"
-
-                if let lastEditor = item.lastEditor {
+                if item.lastEditor != nil {
                     cell.editedView.isHidden = false
-                    cell.editedView.editedAnsweredLabel.text = "edited \(DateUtilities.getDate(item.lastActivityDate))"
-                    cell.editedView.userName.text = lastEditor.displayName
-                    cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: lastEditor.profileImage ?? "")!))
-
-                    let badgeCounts = lastEditor.badgeCounts ?? BadgeCount(bronze: 0, silver: 0, gold: 0)
-
-                    cell.editedView.badges.text = "\( lastEditor.reputation ?? 0)\u{1F538}\(badgeCounts.gold)\u{1F539}\(badgeCounts.silver)\u{1F53A}\(badgeCounts.bronze)"
+                    cell.editedView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
+                    cell.editedView.userName.text = questionCellViewModel.editedViewUserName
+                    cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.editedViewImageUrlString)!))
+                    cell.editedView.badges.text = questionCellViewModel.editedViewBadgesText
                 } else {
                     cell.editedView.isHidden = true
                 }
@@ -226,11 +218,13 @@ extension Comment {
 
         return view
     }
+
     @objc func handleClick(sender: UITapGestureRecognizer) {
         if let view = (sender.view as? CommentLabel), let userId = view.userID, let listener = view.clickListener {
             listener(userId)
         }
     }
+
     class CommentLabel: UILabel {
         var clickListener: ((Int) -> Void)?
         var userID: Int?
