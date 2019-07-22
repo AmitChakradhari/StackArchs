@@ -44,9 +44,8 @@ extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // swiftlint:disable force_cast
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AllQuestionsTableViewCell
-        // swiftlint:enable force_cast
         guard let allQuestions = allQuestions else { return cell }
 
         let cellData = allQuestionPageViewModel.questionCellItem(item: allQuestions.items[indexPath.row])
