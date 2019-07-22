@@ -1,24 +1,23 @@
 import UIKit
-import PromiseKit
 class AllQuestionsPage: UIViewController {
 
-    var networkManager: NetworkManager!
     var tableView: UITableView!
     let cellIdentifier = "allQuestionCell"
     var allQuestions: AllQuestions!
+    var allQuestionPageViewModel: AllQuestionPageViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setUpTableView()
-        networkManager = NetworkManager()
-        networkManager.getAllQuestions()
-            .done { [weak self] allQuestion in
-            self?.allQuestions = allQuestion
-            }.done { [weak self] in
+
+        allQuestionPageViewModel = AllQuestionPageViewModel()
+
+        allQuestionPageViewModel.getAllQuestions { [weak self] allQuestion in
+            if let allQuest = allQuestion {
+                self?.allQuestions = allQuest
                 self?.tableView.reloadData()
-            }.catch { error in
-                print("error: \(error.localizedDescription)")
+            }
         }
     }
 
@@ -38,6 +37,7 @@ class AllQuestionsPage: UIViewController {
 }
 
 extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let allQuestions = allQuestions else { return 0 }
         return allQuestions.items.count
@@ -47,12 +47,14 @@ extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
         // swiftlint:disable force_cast
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AllQuestionsTableViewCell
         // swiftlint:enable force_cast
-        guard let allQuestions = allQuestions else { return cell}
-        let items = allQuestions.items
-        cell.questionTitle.text = items[indexPath.row].title
-        cell.questionTag.text = items[indexPath.row].tags.joined(separator: ", ")
-        cell.createdDate.text = DateUtilities.getDate(items[indexPath.row].creationDate)
+        guard let allQuestions = allQuestions else { return cell }
+
+        let cellData = allQuestionPageViewModel.questionCellItem(item: allQuestions.items[indexPath.row])
+        cell.questionTitle.text = cellData.questionTitle
+        cell.questionTag.text = cellData.questionTag
+        cell.createdDate.text = cellData.createdDate
         cell.layoutIfNeeded()
+        
         return cell
     }
 
