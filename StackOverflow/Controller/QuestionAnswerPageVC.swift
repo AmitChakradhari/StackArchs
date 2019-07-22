@@ -17,23 +17,16 @@ class QuestionAnswerPageVC: UIViewController {
         super.viewDidLoad()
 
 
-        questionAnswerPageViewModel = QuestionAnswerPageViewModel(vc: self)
         setupView()
-        networkManager = NetworkManager()
-        networkManager.getQuestion(with: questionId)
-            .then { [weak self] qData -> Promise<Answers> in
-                guard let strongSelf = self else {
-                    return UIViewController.brokenPromise()
-                }
-                strongSelf.questionData = qData
-                return strongSelf.networkManager.getAnswersOfQuestion(with: strongSelf.questionId)
-            }.done { [weak self] ansData in
-                self?.answersData = ansData
-            }.ensure { [weak self] in
-                self?.tableView.reloadData()
-            }.catch { error in
-                print("error: \(error.localizedDescription)")
+
+        questionAnswerPageViewModel = QuestionAnswerPageViewModel()
+
+        questionAnswerPageViewModel.getQuestionAnswer(with: questionId) { [weak self] in
+            self?.questionData = self?.questionAnswerPageViewModel.questionData
+            self?.answersData = self?.questionAnswerPageViewModel.answersData
+            self?.tableView.reloadData()
         }
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -41,10 +34,19 @@ class QuestionAnswerPageVC: UIViewController {
     }
 
     func setupView() {
-        let questionAnswerPageView = questionAnswerPageViewModel.questionAnswerPageView!
-        tableView = questionAnswerPageViewModel.tableView
+
+        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
+        let displayWidth: CGFloat = self.view.frame.width
+        let displayHeight: CGFloat = self.view.frame.height
+
+        let questionAnswerPageView = QuestionAnswerPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
+
+        tableView = questionAnswerPageView.tableView
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
+        tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
+
         view.addSubview(questionAnswerPageView)
         view.backgroundColor = .white
     }

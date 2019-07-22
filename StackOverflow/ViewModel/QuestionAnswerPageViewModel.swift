@@ -1,23 +1,32 @@
 import UIKit
-class QuestionAnswerPageViewModel {
+import PromiseKit
 
-    let questionAnswerPageView: QuestionAnswerPageView!
-    let tableView: UITableView!
+class QuestionAnswerPageViewModel {
 
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
 
-    init(vc: UIViewController) {
-        let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
-        let displayWidth: CGFloat = vc.view.frame.width
-        let displayHeight: CGFloat = vc.view.frame.height
+    let networkManager = NetworkManager()
 
-        questionAnswerPageView = QuestionAnswerPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
+    var questionData: Question!
+    var answersData: Answers!
 
-        tableView = questionAnswerPageView.tableView
-        tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
-        tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
+    func getQuestionAnswer(with questionId: Int, completion: @escaping() -> Void) {
+        networkManager.getQuestion(with: questionId)
+            .then { [weak self] qData -> Promise<Answers> in
+                guard let strongSelf = self else {
+                    return UIViewController.brokenPromise()
+                }
+                strongSelf.questionData = qData
+                return strongSelf.networkManager.getAnswersOfQuestion(with: questionId)
+            } .done { [weak self] ansData in
+                self?.answersData = ansData
+                completion()
+            } .catch { error in
+                print("error: \(error.localizedDescription)")
+        }
     }
+
 }
 
 
