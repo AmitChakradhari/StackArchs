@@ -75,6 +75,7 @@ class QuestionAnswerPageVC: UIViewController {
             break
         }
     }
+
 }
 
 extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
@@ -145,26 +146,22 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                 cell.editors.axis = .vertical
             }
             let item = answersData.items[indexPath.row]
-            cell.answerDetail.text = item.bodyMarkdown
+            let answerCellData = AnswerCellViewModel(answerData: item)
+            cell.answerDetail.text = answerCellData.answerDetail
             if !indexPath.row.isMultiple(of: 2) {
                 cell.contentView.backgroundColor = .lightGray
             }
-            cell.answeredView.editedAnsweredLabel.text = "answered \(DateUtilities.getDate(item.creationDate))"
-            cell.answeredView.userName.text = item.owner.displayName ?? ""
-            if let imageUrl = URL(string: item.owner.profileImage ?? "") {
-                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: imageUrl))
-            }
-            let badgeCounts = item.owner.badgeCounts ?? BadgeCount(bronze: 0, silver: 0, gold: 0)
-            cell.answeredView.badges.text = "\(item.owner.reputation ?? 0)\u{1F538}\(badgeCounts.gold)\u{1F539}\(badgeCounts.silver)\u{1F53A}\(badgeCounts.bronze)"
+            cell.answeredView.editedAnsweredLabel.text = answerCellData.answeredViewEditedAnsweredLabel
+            cell.answeredView.userName.text = answerCellData.answeredViewUserName
+            cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.answeredViewImageUrlString)!))
+            cell.answeredView.badges.text = answerCellData.answeredViewBadgesText
 
-            if let lastEditor = item.lastEditor {
+            if item.lastEditor != nil {
                 cell.editedView.isHidden = false
-                cell.editedView.editedAnsweredLabel.text = "edited \(DateUtilities.getDate(item.lastEditDate ?? 0))"
-                cell.editedView.userName.text = lastEditor.displayName
-                cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: lastEditor.profileImage ?? "")!))
-
-                let badgeCounts = lastEditor.badgeCounts ?? BadgeCount(bronze: 0, silver: 0, gold: 0)
-                cell.editedView.badges.text = "\( lastEditor.reputation ?? 0)\u{1F538}\(badgeCounts.gold)\u{1F539}\(badgeCounts.silver)\u{1F53A}\(badgeCounts.bronze)"
+                cell.editedView.editedAnsweredLabel.text = answerCellData.editedViewEditedAnsweredLabel
+                cell.editedView.userName.text = answerCellData.editedViewUserName
+                cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.editedViewImageUrlString)!))
+                cell.editedView.badges.text = answerCellData.editedViewBadgesText
             } else {
                 cell.editedView.isHidden = true
             }
