@@ -147,6 +147,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
             }
             let item = answersData.items[indexPath.row]
             let answerCellData = AnswerCellViewModel(answerData: item)
+
             cell.answerDetail.text = answerCellData.answerDetail
             if !indexPath.row.isMultiple(of: 2) {
                 cell.contentView.backgroundColor = .lightGray
