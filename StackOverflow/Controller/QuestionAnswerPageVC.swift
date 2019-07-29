@@ -184,10 +184,7 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
 
     func getClickListener(userID: Int) -> ((Int) -> Void) {
         return ({ [weak self] userId in
-            let userProfilePage = UserProfilePageViewController(userId: userId)
-            userProfilePage.modalPresentationStyle = .popover
-            self?.modalTransitionStyle = .flipHorizontal
-            self?.showDetailViewController(userProfilePage, sender: self)
+            self?.coordinator?.showProfilePage(userId: userId)
         })
     }
 }

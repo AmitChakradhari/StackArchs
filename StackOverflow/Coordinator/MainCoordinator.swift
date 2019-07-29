@@ -25,6 +25,13 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
         navigationController.pushViewController(vc, animated: true)
     }
 
+    func showProfilePage(userId: Int) {
+        let vc = UserProfilePageViewController(userId: userId)
+        vc.coordinator = self
+        vc.modalPresentationStyle = .popover
+        navigationController.pushViewController(vc, animated: true)
+    }
+
     func dismissViewController() {
         navigationController.popViewController(animated: true)
     }

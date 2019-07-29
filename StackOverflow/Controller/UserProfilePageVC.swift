@@ -5,6 +5,7 @@ class UserProfilePageViewController: UIViewController {
     var userProfilePageView: UserProfilePageView!
     var userId: Int
     var userProfilePageViewModel: UserProfilePageViewModel!
+    weak var coordinator: MainCoordinator?
 
     init(userId: Int) {
         self.userId = userId
@@ -36,6 +37,6 @@ class UserProfilePageViewController: UIViewController {
     }
 
     @objc func backButtonPressed(sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        coordinator?.dismissViewController()
     }
 }
