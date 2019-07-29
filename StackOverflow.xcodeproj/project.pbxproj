@@ -31,6 +31,8 @@
 		7DA82D1D22DD3DF40056A8FA /* QuestionAnswerPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D1C22DD3DF40056A8FA /* QuestionAnswerPageView.swift */; };
 		7DA82D1F22DD489C0056A8FA /* AllQuestionsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D1E22DD489C0056A8FA /* AllQuestionsPageView.swift */; };
 		7DA82D2122DD54900056A8FA /* UserProfilePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA82D2022DD54900056A8FA /* UserProfilePageView.swift */; };
+		7DAD975522E915A7002FFAF8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAD975422E915A7002FFAF8 /* Coordinator.swift */; };
+		7DAD975722E91E54002FFAF8 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DAD975622E91E54002FFAF8 /* MainCoordinator.swift */; };
 		DD0E53C9F74310373A757646 /* Pods_StackOverflow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A776AE0FB16DFFEA4100A088 /* Pods_StackOverflow.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,8 @@
 		7DA82D1C22DD3DF40056A8FA /* QuestionAnswerPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionAnswerPageView.swift; sourceTree = "<group>"; };
 		7DA82D1E22DD489C0056A8FA /* AllQuestionsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllQuestionsPageView.swift; sourceTree = "<group>"; };
 		7DA82D2022DD54900056A8FA /* UserProfilePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePageView.swift; sourceTree = "<group>"; };
+		7DAD975422E915A7002FFAF8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		7DAD975622E91E54002FFAF8 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		9D571048D3532A2EDFE38F98 /* Pods-StackOverflow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StackOverflow.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StackOverflow/Pods-StackOverflow.debug.xcconfig"; sourceTree = "<group>"; };
 		A776AE0FB16DFFEA4100A088 /* Pods_StackOverflow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StackOverflow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD56A5FBF80F4273B1EE0BA9 /* Pods-StackOverflow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StackOverflow.release.xcconfig"; path = "Pods/Target Support Files/Pods-StackOverflow/Pods-StackOverflow.release.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +135,7 @@
 				7DA82D1922D68D0B0056A8FA /* View */,
 				7DA82D1A22D68D150056A8FA /* Controller */,
 				7D00144722E13B540055A718 /* ViewModel */,
+				7DAD975322E91581002FFAF8 /* Coordinator */,
 				7D7639D822A314D2007C2E1F /* Assets.xcassets */,
 				7D7639DA22A314D2007C2E1F /* LaunchScreen.storyboard */,
 				7D7639DD22A314D2007C2E1F /* Info.plist */,
@@ -183,6 +188,15 @@
 				7DA1DCC622BD08AD001527F9 /* UserProfilePageVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		7DAD975322E91581002FFAF8 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				7DAD975422E915A7002FFAF8 /* Coordinator.swift */,
+				7DAD975622E91E54002FFAF8 /* MainCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -330,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D7639E722A430D6007C2E1F /* Model.swift in Sources */,
+				7DAD975722E91E54002FFAF8 /* MainCoordinator.swift in Sources */,
 				7D2B3CBF22A71EEB0056D061 /* QuestionAnswerPageVC.swift in Sources */,
 				7D2B3CBB22A71E7B0056D061 /* QuestionTableViewCell.swift in Sources */,
 				7D7639D422A314CF007C2E1F /* AllQuestionsPageVC.swift in Sources */,
@@ -346,6 +361,7 @@
 				7D7639ED22A5BEB8007C2E1F /* AllQuestionsTableViewCell.swift in Sources */,
 				7D7639EF22A5D003007C2E1F /* Constants.swift in Sources */,
 				7DA1DCC322BC42E2001527F9 /* Extensions.swift in Sources */,
+				7DAD975522E915A7002FFAF8 /* Coordinator.swift in Sources */,
 				7D7639E922A4553E007C2E1F /* EndPoint.swift in Sources */,
 				7D7639D222A314CF007C2E1F /* AppDelegate.swift in Sources */,
 				7D085BF522B17C3600BCF59D /* EditedAnsweredView.swift in Sources */,

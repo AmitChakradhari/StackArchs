@@ -6,6 +6,13 @@ class AllQuestionsPage: UIViewController {
     var allQuestions: AllQuestions!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,7 +33,7 @@ class AllQuestionsPage: UIViewController {
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
 
-        let allQuestionPageView =  AllQuestionPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
+        let allQuestionPageView =  AllQuestionPageView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight/2))
         tableView = allQuestionPageView.tableView
         tableView.delegate = self
         tableView.dataSource = self
@@ -70,3 +77,4 @@ extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
     }
 
 }
+

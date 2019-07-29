@@ -5,12 +5,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var coordinator: Coordinator?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        let navController = UINavigationController()
+
+        UIApplication.shared.statusBarView?.backgroundColor = .white
+        navController.isNavigationBarHidden = true
+
+        coordinator = MainCoordinator(navController: navController)
+        coordinator?.start()
+
         window = UIWindow(frame: UIScreen.main.bounds)
-        let allQuestionPage = AllQuestionsPage()
-        window?.rootViewController = allQuestionPage
-        allQuestionPage.view.backgroundColor = .white
+        window?.rootViewController = navController
+        //let allQuestionPage = AllQuestionsPage()
+        //window?.rootViewController = allQuestionPage
+        //allQuestionPage.view.backgroundColor = .white
         window?.makeKeyAndVisible()
         return true
     }
