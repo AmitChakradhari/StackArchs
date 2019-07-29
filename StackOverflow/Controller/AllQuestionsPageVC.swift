@@ -5,6 +5,7 @@ class AllQuestionsPage: UIViewController {
     let cellIdentifier = "allQuestionCell"
     var allQuestions: AllQuestions!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
+    weak var coordinator: MainCoordinator?
 
     override var prefersStatusBarHidden: Bool {
         return false
@@ -67,13 +68,9 @@ extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let allQuestions = allQuestions else { return }
         let items = allQuestions.items
-        let questionAnswerpage = QuestionAnswerPageVC()
-        questionAnswerpage.modalPresentationStyle = .popover
-        questionAnswerpage.modalTransitionStyle = .flipHorizontal
         modalTransitionStyle = .flipHorizontal
-        //present(questionAnswerpage, animated: true, completion: nil)
-        questionAnswerpage.questionId = items[indexPath.row].questionId
-        showDetailViewController(questionAnswerpage, sender: self)
+
+        coordinator?.questionAnswer(qId: items[indexPath.row].questionId)
     }
 
 }

@@ -12,6 +12,7 @@ class QuestionAnswerPageVC: UIViewController {
     var answersData: Answers!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     lazy var questionCellViewModel = QuestionCellViewModel(questionData: questionData)
+    weak var coordinator: MainCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +53,7 @@ class QuestionAnswerPageVC: UIViewController {
     }
 
     @objc func backButtonPressed(sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        coordinator?.dismissViewController()
     }
 
     @objc func moreCommentsButtonPressed(_ sender: UIButton) {
@@ -105,14 +106,14 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
                 cell.questionDetail.text = questionCellViewModel.questionDetail
                 cell.answeredView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
                 cell.answeredView.userName.text = questionCellViewModel.answeredViewUserName
-                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.answeredViewImageUrlString)!))
+                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.answeredViewImageUrlString) ?? URL(fileURLWithPath: "")))
                 cell.answeredView.badges.text = questionCellViewModel.answeredViewBadgesText
 
                 if item.lastEditor != nil {
                     cell.editedView.isHidden = false
                     cell.editedView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
                     cell.editedView.userName.text = questionCellViewModel.editedViewUserName
-                    cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.editedViewImageUrlString)!))
+                    cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.editedViewImageUrlString) ?? URL(fileURLWithPath: "")))
                     cell.editedView.badges.text = questionCellViewModel.editedViewBadgesText
                 } else {
                     cell.editedView.isHidden = true
@@ -154,14 +155,14 @@ extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
             }
             cell.answeredView.editedAnsweredLabel.text = answerCellData.answeredViewEditedAnsweredLabel
             cell.answeredView.userName.text = answerCellData.answeredViewUserName
-            cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.answeredViewImageUrlString)!))
+            cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.answeredViewImageUrlString) ?? URL(fileURLWithPath: "")))
             cell.answeredView.badges.text = answerCellData.answeredViewBadgesText
 
             if item.lastEditor != nil {
                 cell.editedView.isHidden = false
                 cell.editedView.editedAnsweredLabel.text = answerCellData.editedViewEditedAnsweredLabel
                 cell.editedView.userName.text = answerCellData.editedViewUserName
-                cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.editedViewImageUrlString)!))
+                cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.editedViewImageUrlString) ?? URL(fileURLWithPath: "")))
                 cell.editedView.badges.text = answerCellData.editedViewBadgesText
             } else {
                 cell.editedView.isHidden = true
