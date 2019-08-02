@@ -10,4 +10,6 @@ target 'StackOverflow' do
   pod 'Alamofire'
   pod 'Moya'
   pod 'PromiseKit'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 end
