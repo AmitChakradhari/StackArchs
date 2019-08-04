@@ -1,6 +1,9 @@
 import Foundation
 import Moya
 import PromiseKit
+import RxSwift
+import RxCocoa
+
 struct NetworkManager {
 
     static let endpointClosure = { (target: StackExchangeAPI) -> Endpoint in

@@ -1,4 +1,7 @@
 import UIKit
+import RxSwift
+import RxCocoa
+
 class AllQuestionsPage: UIViewController {
 
     var tableView: UITableView!
@@ -6,6 +9,8 @@ class AllQuestionsPage: UIViewController {
     var allQuestions: AllQuestions!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
     weak var coordinator: MainCoordinator?
+
+    let disposeBag = DisposeBag()
 
     override var prefersStatusBarHidden: Bool {
         return false
@@ -21,13 +26,14 @@ class AllQuestionsPage: UIViewController {
 
         allQuestionPageViewModel = AllQuestionPageViewModel()
 
-        allQuestionPageViewModel.getAllQuestions { [weak self] allQuestion in
-            if let allQuest = allQuestion {
-                self?.allQuestions = allQuest
+        allQuestionPageViewModel.getAllQuestions()
+            .subscribe(onNext: { [weak self] allQuestion in
+                self?.allQuestions = allQuestion
                 self?.tableView.reloadData()
-            }
+            })
+            .disposed(by: disposeBag)
+
         }
-    }
 
     func setUpTableView() {
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height

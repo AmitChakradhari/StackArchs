@@ -1,23 +1,25 @@
 import UIKit
 import PromiseKit
+import RxSwift
+import RxCocoa
 
 class AllQuestionPageViewModel {
 
-
     var allQuestions: AllQuestions!
 
-    func getAllQuestions(completion: @escaping (AllQuestions?) -> Void) {
+    func getAllQuestions() -> Observable<AllQuestions> {
+        return Observable.create { observer -> Disposable in
+            let networkManager = NetworkManager()
 
-        let networkManager = NetworkManager()
-
-        networkManager.getAllQuestions()
-            .done { [weak self] allQuest in
-                self?.allQuestions = allQuest
-                completion(allQuest)
-            }.catch { error in
-                completion(nil)
+            networkManager.getAllQuestions()
+                .done { [weak self] allQuest in
+                    self?.allQuestions = allQuest
+                    observer.onNext(allQuest)
+                }.catch { error in
+                    observer.onError(error)
+            }
+            return Disposables.create()
         }
-
     }
 
     func questionCellItem(item: AllQuestions.AllItems) -> AllQuestionPageCellData {
