@@ -16,7 +16,7 @@ extension StackExchangeAPI: TargetType {
     public var path: String {
         switch self {
         case .allQuestions:
-            return "2.2/questions?order=desc&sort=votes&site=stackoverflow&filter=!SX3kgUUZ3HULohOcN1"
+            return "2.2/questions?order=desc&sort=votes&site=stackoverflow&filter=!FdXqhHLx0yX_OIjLpMah9VRMJj"
         case .question(let id):
             return "/2.2/questions/\(id)?order=desc&sort=activity&site=stackoverflow&filter=!67O0sxiY9UvfuaU(YmuPUIxlhai.S3L6rCuQC76BQKQTApRCp-C45HyI(i9"
         case .answersOfQuestion(let id):

@@ -20,14 +20,14 @@ struct AllQuestions: Codable {
         let link: String
         let title: String
     }
-    struct Owner: Codable {
-        let reputation: Int?
-        let userId: Int?
-        let userType: String?
-        let profileImage: String?
-        let displayName: String?
-        let link: String?
-    }
+//    struct Owner: Codable {
+//        let reputation: Int?
+//        let userId: Int?
+//        let userType: String?
+//        let profileImage: String?
+//        let displayName: String?
+//        let link: String?
+//    }
 }
 
 struct Question: Codable {
@@ -121,4 +121,28 @@ struct Answers: Codable {
         let body: String
     }
 
+}
+
+struct GenericResponse<T: Codable>: Codable {
+    let items: [T]
+    let hasMore: Bool
+    let quotaMax: Int
+    let quotaRemaining: Int
+}
+
+struct AllQuestionsItems: Codable {
+    let tags: [String]
+    let comments: [Comment]?
+    let owner: Owner
+    let lastEditor: Owner?
+    let isAnswered: Bool
+    let answerCount: Int
+    let score: Int
+    let lastActivityDate: Int
+    let creationDate: Int
+    let questionId: Int
+    let bodyMarkdown: String
+    let link: String
+    let title: String
+    let body: String
 }
