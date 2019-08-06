@@ -7,13 +7,13 @@ import RxCocoa
 struct NetworkManager {
 
     enum NetworkCall {
-        case AllQuestions
+        case AllQuestion
     }
 
-    func getResponse(_ networkCall: NetworkCall) {
-        switch networkCall {
-        case .AllQuestions:
-            getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self)
+    func getResponse<T>(_ call: NetworkCall) -> Promise<T> {
+        switch call {
+        case .AllQuestion:
+            return getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self) as! Promise<T>
         }
     }
 
@@ -45,27 +45,6 @@ struct NetworkManager {
     }
 
     let provider = MoyaProvider<StackExchangeAPI>(endpointClosure: endpointClosure)//(plugins: [CompleteUrlLoggerPlugin()])
-
-    func getAllQuestions () -> Promise<GenericResponse<AllQuestionsItems>> {
-        return Promise { seal in
-            provider.request(.allQuestions) { result in
-                switch result {
-                case .success(let response):
-                    let decoder = JSONDecoder().convertFromSnakeCase()
-                    do {
-                        let decodedData = try decoder.decode(GenericResponse<AllQuestionsItems>.self, from: response.data)
-                        seal.fulfill(decodedData)
-                    } catch (let e) {
-                        print("error: \(e.localizedDescription)")
-                        seal.reject(e)
-                    }
-                case .failure(let error):
-                    print("error : \(error.localizedDescription)")
-                    seal.reject(error)
-                }
-            }
-        }
-    }
 
     func getQuestion(with qId: Int) -> Promise<Question> {
         return Promise { seal in

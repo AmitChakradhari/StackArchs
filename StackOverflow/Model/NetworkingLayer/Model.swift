@@ -2,28 +2,27 @@ import Foundation
 
 struct Question: Codable {
 
-    let items: [AllItems]
+    let items: [QuestionItems]
     let hasMore: Bool
     let quotaMax: Int
     let quotaRemaining: Int
+}
 
-    struct AllItems: Codable {
-        let tags: [String]
-        let comments: [Comment]?
-        let owner: Owner
-        let lastEditor: Owner?
-        let isAnswered: Bool
-        let answerCount: Int
-        let score: Int
-        let lastActivityDate: Int
-        let creationDate: Int
-        let questionId: Int
-        let bodyMarkdown: String
-        let link: String
-        let title: String
-        let body: String
-    }
-
+struct QuestionItems: Codable {
+    let tags: [String]
+    let comments: [Comment]?
+    let owner: Owner
+    let lastEditor: Owner?
+    let isAnswered: Bool
+    let answerCount: Int
+    let score: Int
+    let lastActivityDate: Int
+    let creationDate: Int
+    let questionId: Int
+    let bodyMarkdown: String
+    let link: String
+    let title: String
+    let body: String
 }
 
 struct User: Codable {

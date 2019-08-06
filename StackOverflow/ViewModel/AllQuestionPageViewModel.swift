@@ -8,25 +8,12 @@ class AllQuestionPageViewModel {
     var allQuestions: GenericResponse<AllQuestionsItems>!
 
     func getAllQuestions() -> Observable<GenericResponse<AllQuestionsItems>> {
+
         return Observable.create { observer -> Disposable in
+
             let networkManager = NetworkManager()
 
             networkManager.getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self)
-                .done { [weak self] allQuest in
-                    self?.allQuestions = allQuest
-                    observer.onNext(allQuest)
-                }.catch { error in
-                    observer.onError(error)
-            }
-            return Disposables.create()
-        }
-    }
-
-    func getAllQuestions1() -> Observable<GenericResponse<AllQuestionsItems>> {
-        return Observable.create { observer -> Disposable in
-            let networkManager = NetworkManager()
-
-            networkManager.getAllQuestions()
                 .done { [weak self] allQuest in
                     self?.allQuestions = allQuest
                     observer.onNext(allQuest)

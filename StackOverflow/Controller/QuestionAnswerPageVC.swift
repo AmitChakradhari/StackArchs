@@ -8,7 +8,7 @@ class QuestionAnswerPageVC: UIViewController {
     var questionId: Int!
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
-    var questionData: Question!
+    var questionData: GenericResponse<QuestionItems>!
     var answersData: Answers!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     lazy var questionCellViewModel = QuestionCellViewModel(questionData: questionData)
@@ -16,7 +16,6 @@ class QuestionAnswerPageVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
 
         setupView()
 

@@ -8,11 +8,11 @@ class QuestionAnswerPageViewModel {
 
     let networkManager = NetworkManager()
 
-    var questionData: Question!
+    var questionData: GenericResponse<QuestionItems>!
     var answersData: Answers!
 
     func getQuestionAnswer(with questionId: Int, completion: @escaping() -> Void) {
-        networkManager.getQuestion(with: questionId)
+        networkManager.getResponse(api: .question(id: questionId), as: GenericResponse<QuestionItems>.self)
             .then { [weak self] qData -> Promise<Answers> in
                 guard let strongSelf = self else {
                     return UIViewController.brokenPromise()
@@ -44,7 +44,7 @@ struct QuestionCellViewModel {
     var editedViewImageUrlString: String = ""
     var editedViewBadgesText: String = ""
 
-    init(questionData: Question) {
+    init(questionData: GenericResponse<QuestionItems>) {
         if let item = questionData.items.first {
             questionTitle = item.title
             questionDetail = item.bodyMarkdown
