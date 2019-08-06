@@ -3,11 +3,11 @@ import PromiseKit
 
 class UserProfilePageViewModel {
 
-    var user: User!
+    var user: GenericResponse<UserItem>!
 
-    func getUser(userId: Int, completion: @escaping (User) -> Void) {
+    func getUser(userId: Int, completion: @escaping (GenericResponse<UserItem>) -> Void) {
         let networkManager = NetworkManager()
-        networkManager.getUser(with: userId)
+        networkManager.getResponse(api: .user(id: userId), as: GenericResponse<UserItem>.self)
             .done { [weak self] user in
                 self?.user = user
                 completion(user)

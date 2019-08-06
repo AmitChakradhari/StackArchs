@@ -45,27 +45,6 @@ struct NetworkManager {
     }
 
     let provider = MoyaProvider<StackExchangeAPI>(endpointClosure: endpointClosure)//(plugins: [CompleteUrlLoggerPlugin()])
-
-    func getUser(with userID: Int) -> Promise<User> {
-        return Promise { seal in
-            provider.request(.user(id: userID)) { result in
-                switch result {
-                case .success(let response):
-                    let decoder = JSONDecoder().convertFromSnakeCase()
-                    do {
-                        let decodedData = try decoder.decode(User.self, from: response.data)
-                        seal.fulfill(decodedData)
-                    } catch (let e) {
-                        print("error: \(e.localizedDescription)")
-                        seal.reject(e)
-                    }
-                case .failure(let error):
-                    print("error : \(error.localizedDescription)")
-                    seal.reject(error)
-                }
-            }
-        }
-    }
 }
 class CompleteUrlLoggerPlugin : PluginType {
     func willSend(_ request: RequestType, target: TargetType) {

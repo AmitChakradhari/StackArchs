@@ -17,26 +17,20 @@ struct QuestionItems: Codable {
     let body: String
 }
 
-struct User: Codable {
-    let items: [UserItem]
-    let hasMore: Bool
-    let quotaMax: Int
-    let quotaRemaining: Int
-    struct UserItem: Codable {
-        let badgeCounts: BadgeCount?
-        let answerCount: Int?
-        let questionCount: Int?
-        let accountId: Int?
-        let reputation: Int?
-        let creationDate: Int?
-        let userId: Int?
-        let aboutMe: String?
-        let location: String?
-        let websiteUrl: String?
-        let link: String?
-        let profileImage: String?
-        let displayName: String?
-    }
+struct UserItem: Codable {
+    let badgeCounts: BadgeCount?
+    let answerCount: Int?
+    let questionCount: Int?
+    let accountId: Int?
+    let reputation: Int?
+    let creationDate: Int?
+    let userId: Int?
+    let aboutMe: String?
+    let location: String?
+    let websiteUrl: String?
+    let link: String?
+    let profileImage: String?
+    let displayName: String?
 }
 
 class Comment: Codable {
