@@ -9,7 +9,7 @@ class QuestionAnswerPageVC: UIViewController {
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
     var questionData: GenericResponse<QuestionItems>!
-    var answersData: Answers!
+    var answersData: GenericResponse<AnswerItems>!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     lazy var questionCellViewModel = QuestionCellViewModel(questionData: questionData)
     weak var coordinator: MainCoordinator?

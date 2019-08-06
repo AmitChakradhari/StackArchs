@@ -9,16 +9,16 @@ class QuestionAnswerPageViewModel {
     let networkManager = NetworkManager()
 
     var questionData: GenericResponse<QuestionItems>!
-    var answersData: Answers!
+    var answersData: GenericResponse<AnswerItems>!
 
     func getQuestionAnswer(with questionId: Int, completion: @escaping() -> Void) {
         networkManager.getResponse(api: .question(id: questionId), as: GenericResponse<QuestionItems>.self)
-            .then { [weak self] qData -> Promise<Answers> in
+            .then { [weak self] qData -> Promise<GenericResponse<AnswerItems>> in
                 guard let strongSelf = self else {
                     return UIViewController.brokenPromise()
                 }
                 strongSelf.questionData = qData
-                return strongSelf.networkManager.getAnswersOfQuestion(with: questionId)
+                return strongSelf.networkManager.getResponse(api: .answersOfQuestion(id: questionId), as: GenericResponse<AnswerItems>.self)
             } .done { [weak self] ansData in
                 self?.answersData = ansData
                 completion()
@@ -79,7 +79,7 @@ struct AnswerCellViewModel {
     var editedViewImageUrlString: String = ""
     var editedViewBadgesText: String = ""
 
-    init(answerData: Answers.Answer) {
+    init(answerData: AnswerItems) {
         answerDetail = answerData.bodyMarkdown
         answeredViewEditedAnsweredLabel = "answered \(DateUtilities.getDate(answerData.creationDate))"
         answeredViewUserName = answerData.owner.displayName ?? ""

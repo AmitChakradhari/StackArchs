@@ -1,13 +1,5 @@
 import Foundation
 
-struct Question: Codable {
-
-    let items: [QuestionItems]
-    let hasMore: Bool
-    let quotaMax: Int
-    let quotaRemaining: Int
-}
-
 struct QuestionItems: Codable {
     let tags: [String]
     let comments: [Comment]?
@@ -61,26 +53,15 @@ struct BadgeCount: Codable {
     let gold: Int
 }
 
-struct Answers: Codable {
-
-    let items: [Answer]
-    let hasMore: Bool
-    let quotaMax: Int
-    let quotaRemaining: Int
-
-   struct Answer: Codable {
-        let owner: Owner
-        let lastEditor: Owner?
-        let comments: [Comment]?
-        //let is_accepted: Bool
-        //let score: Int
-        let lastEditDate: Int?
-        let creationDate: Int
-        let answerId: Int
-        let bodyMarkdown: String
-        let body: String
-    }
-
+struct AnswerItems: Codable {
+    let owner: Owner
+    let lastEditor: Owner?
+    let comments: [Comment]?
+    let lastEditDate: Int?
+    let creationDate: Int
+    let answerId: Int
+    let bodyMarkdown: String
+    let body: String
 }
 
 struct GenericResponse<T: Codable>: Codable {

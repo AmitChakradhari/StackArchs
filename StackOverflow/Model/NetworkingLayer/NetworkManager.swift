@@ -46,48 +46,6 @@ struct NetworkManager {
 
     let provider = MoyaProvider<StackExchangeAPI>(endpointClosure: endpointClosure)//(plugins: [CompleteUrlLoggerPlugin()])
 
-    func getQuestion(with qId: Int) -> Promise<Question> {
-        return Promise { seal in
-            provider.request(.question(id: qId)) { result in
-                switch result {
-                case .success(let response):
-                    let decoder = JSONDecoder().convertFromSnakeCase()
-                    do {
-                        let decodedData = try decoder.decode(Question.self, from: response.data)
-                        seal.fulfill(decodedData)
-                    } catch (let e) {
-                        print("error: \(e.localizedDescription)")
-                        seal.reject(e)
-                    }
-                case .failure(let error):
-                    print("error : \(error.localizedDescription)")
-                    seal.reject(error)
-                }
-            }
-        }
-    }
-
-    func getAnswersOfQuestion(with qId: Int) -> Promise<Answers> {
-        return Promise { seal in
-            provider.request(.answersOfQuestion(id: qId)) { result in
-                switch result {
-                case .success(let response):
-                    let decoder = JSONDecoder().convertFromSnakeCase()
-                    do {
-                        let decodedData = try decoder.decode(Answers.self, from: response.data)
-                        seal.fulfill(decodedData)
-                    } catch (let e) {
-                        print("error: \(e.localizedDescription)")
-                        seal.reject(e)
-                    }
-                case .failure(let error):
-                    print("error : \(error.localizedDescription)")
-                    seal.reject(error)
-                }
-            }
-        }
-    }
-
     func getUser(with userID: Int) -> Promise<User> {
         return Promise { seal in
             provider.request(.user(id: userID)) { result in
