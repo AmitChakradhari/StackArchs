@@ -6,7 +6,7 @@ class AllQuestionsPage: UIViewController {
 
     var tableView: UITableView!
     let cellIdentifier = "allQuestionCell"
-    var allQuestions: AllQuestions!
+    var allQuestions: GenericResponse<AllQuestionsItems>!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
     weak var coordinator: MainCoordinator?
 

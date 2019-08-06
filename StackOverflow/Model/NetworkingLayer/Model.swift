@@ -1,35 +1,5 @@
 import Foundation
 
-struct AllQuestions: Codable {
-
-    let items: [AllItems]
-    let hasMore: Bool
-    let quotaMax: Int
-    let quotaRemaining: Int
-
-    struct AllItems: Codable {
-        let tags: [String]
-        let owner: Owner
-        let isAnswered: Bool
-        let viewCount: Int
-        let answerCount: Int
-        let score: Int
-        let lastActivityDate: Int
-        let creationDate: Int
-        let questionId: Int
-        let link: String
-        let title: String
-    }
-//    struct Owner: Codable {
-//        let reputation: Int?
-//        let userId: Int?
-//        let userType: String?
-//        let profileImage: String?
-//        let displayName: String?
-//        let link: String?
-//    }
-}
-
 struct Question: Codable {
 
     let items: [AllItems]
@@ -86,15 +56,6 @@ class Comment: Codable {
     let body: String
 }
 
-struct Owner: Codable {
-    let badgeCounts: BadgeCount?
-    let reputation: Int?
-    let userId: Int?
-    let userType: String?
-    let profileImage: String?
-    let displayName: String?
-}
-
 struct BadgeCount: Codable {
     let bronze: Int
     let silver: Int
@@ -132,17 +93,23 @@ struct GenericResponse<T: Codable>: Codable {
 
 struct AllQuestionsItems: Codable {
     let tags: [String]
-    let comments: [Comment]?
     let owner: Owner
-    let lastEditor: Owner?
     let isAnswered: Bool
+    let viewCount: Int
     let answerCount: Int
     let score: Int
     let lastActivityDate: Int
     let creationDate: Int
     let questionId: Int
-    let bodyMarkdown: String
     let link: String
     let title: String
-    let body: String
+}
+
+struct Owner: Codable {
+    let badgeCounts: BadgeCount?
+    let reputation: Int?
+    let userId: Int?
+    let userType: String?
+    let profileImage: String?
+    let displayName: String?
 }

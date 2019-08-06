@@ -5,9 +5,24 @@ import RxCocoa
 
 class AllQuestionPageViewModel {
 
-    var allQuestions: AllQuestions!
+    var allQuestions: GenericResponse<AllQuestionsItems>!
 
-    func getAllQuestions() -> Observable<AllQuestions> {
+    func getAllQuestions() -> Observable<GenericResponse<AllQuestionsItems>> {
+        return Observable.create { observer -> Disposable in
+            let networkManager = NetworkManager()
+
+            networkManager.getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self)
+                .done { [weak self] allQuest in
+                    self?.allQuestions = allQuest
+                    observer.onNext(allQuest)
+                }.catch { error in
+                    observer.onError(error)
+            }
+            return Disposables.create()
+        }
+    }
+
+    func getAllQuestions1() -> Observable<GenericResponse<AllQuestionsItems>> {
         return Observable.create { observer -> Disposable in
             let networkManager = NetworkManager()
 
@@ -22,7 +37,7 @@ class AllQuestionPageViewModel {
         }
     }
 
-    func questionCellItem(item: AllQuestions.AllItems) -> AllQuestionPageCellData {
+    func questionCellItem(item: AllQuestionsItems) -> AllQuestionPageCellData {
         return AllQuestionPageCellData(questionTitle: item.title, questionTag: item.tags.joined(separator: ", "), createdDate: DateUtilities.getDate(item.creationDate))
     }
 
