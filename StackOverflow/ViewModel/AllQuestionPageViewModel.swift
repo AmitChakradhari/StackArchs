@@ -7,7 +7,7 @@ class AllQuestionPageViewModel {
 
     var allQuestions: GenericResponse<AllQuestionsItems>!
 
-    func getAllQuestions() -> Observable<GenericResponse<AllQuestionsItems>> {
+    func getAllQuestions() -> Observable<[AllQuestionsItems]> {
         let networkManager = NetworkManager()
         return networkManager.getResponse1(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self)
     }

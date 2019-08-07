@@ -38,15 +38,15 @@ struct NetworkManager {
         }
     }
 
-    func getResponse1<T: Codable>(api: StackExchangeAPI, as type: T.Type) -> Observable<T> {
+    func getResponse1<T: Codable>(api: StackExchangeAPI, as type: GenericResponse<T>.Type) -> Observable<[T]> {
         return Observable.create { observer -> Disposable in
             self.provider.request(api) { result in
                 switch result {
                 case .success(let response):
                     let decoder = JSONDecoder().convertFromSnakeCase()
                     do {
-                        let decodedData = try decoder.decode(T.self, from: response.data)
-                        observer.onNext(decodedData)
+                        let decodedData = try decoder.decode(GenericResponse<T>.self, from: response.data)
+                        observer.onNext(decodedData.items)
                     } catch (let e) {
                         print("error: \(e.localizedDescription)")
                         observer.onError(e)

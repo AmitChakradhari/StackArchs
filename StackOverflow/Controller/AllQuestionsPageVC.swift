@@ -6,8 +6,9 @@ class AllQuestionsPage: UIViewController {
 
     var tableView: UITableView!
     let cellIdentifier = "allQuestionCell"
-    var allQuestions: GenericResponse<AllQuestionsItems>!
+    var allQuestions: [AllQuestionsItems]!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
+    var questionsObservable: Observable<[AllQuestionsItems]>!
     weak var coordinator: MainCoordinator?
 
     let disposeBag = DisposeBag()
@@ -26,10 +27,24 @@ class AllQuestionsPage: UIViewController {
 
         allQuestionPageViewModel = AllQuestionPageViewModel()
 
-        allQuestionPageViewModel.getAllQuestions()
-            .subscribe(onNext: { [weak self] allQuestion in
-                self?.allQuestions = allQuestion
-                self?.tableView.reloadData()
+        questionsObservable = allQuestionPageViewModel.getAllQuestions()
+
+        questionsObservable.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: AllQuestionsTableViewCell.self)) { [weak self] (row, element, cell) in
+
+            guard let strongSelf = self else { return }
+
+            let cellData = strongSelf.allQuestionPageViewModel.questionCellItem(item: element)
+            cell.questionTitle.text = cellData.questionTitle
+            cell.questionTag.text = cellData.questionTag
+            cell.createdDate.text = cellData.createdDate
+            }
+        .disposed(by: disposeBag)
+
+        tableView.rx
+            .modelSelected(AllQuestionsItems.self)
+            .subscribe(onNext: { [weak self] value in
+                self?.modalTransitionStyle = .flipHorizontal
+                self?.coordinator?.questionAnswer(qId: value.questionId)
             })
             .disposed(by: disposeBag)
 
@@ -42,42 +57,8 @@ class AllQuestionsPage: UIViewController {
 
         let allQuestionPageView =  AllQuestionPageView(frame: CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight/2))
         tableView = allQuestionPageView.tableView
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.register(AllQuestionsTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         view.addSubview(tableView)
     }
 
 }
-
-extension AllQuestionsPage: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let allQuestions = allQuestions else { return 0 }
-        return allQuestions.items.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! AllQuestionsTableViewCell
-        guard let allQuestions = allQuestions else { return cell }
-
-        let cellData = allQuestionPageViewModel.questionCellItem(item: allQuestions.items[indexPath.row])
-        cell.questionTitle.text = cellData.questionTitle
-        cell.questionTag.text = cellData.questionTag
-        cell.createdDate.text = cellData.createdDate
-        cell.layoutIfNeeded()
-        
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let allQuestions = allQuestions else { return }
-        let items = allQuestions.items
-        modalTransitionStyle = .flipHorizontal
-
-        coordinator?.questionAnswer(qId: items[indexPath.row].questionId)
-    }
-
-}
-
