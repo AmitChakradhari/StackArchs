@@ -6,16 +6,16 @@ import RxCocoa
 
 struct NetworkManager {
 
-    enum NetworkCall {
-        case AllQuestion
-    }
-
-    func getResponse<T>(_ call: NetworkCall) -> Promise<T> {
-        switch call {
-        case .AllQuestion:
-            return getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self) as! Promise<T>
-        }
-    }
+//    enum NetworkCall {
+//        case AllQuestion
+//    }
+//
+//    func getResponse<T>(_ call: NetworkCall) -> Promise<T> {
+//        switch call {
+//        case .AllQuestion:
+//            return getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self) as! Promise<T>
+//        }
+//    }
 
     func getResponse<T: Codable>(api: StackExchangeAPI, as type: T.Type) -> Promise<T> {
         return Promise { seal in

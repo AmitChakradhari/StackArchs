@@ -25,7 +25,9 @@ class AllQuestionPageViewModel {
     }
 
     func questionCellItem(item: AllQuestionsItems) -> AllQuestionPageCellData {
-        return AllQuestionPageCellData(questionTitle: item.title, questionTag: item.tags.joined(separator: ", "), createdDate: DateUtilities.getDate(item.creationDate))
+        return AllQuestionPageCellData(questionTitle: item.title,
+                                       questionTag: item.tags.joined(separator: ", "),
+                                       createdDate: DateUtilities.getDate(item.creationDate))
     }
 
 }
