@@ -38,6 +38,28 @@ struct NetworkManager {
         }
     }
 
+    func getResponse1<T: Codable>(api: StackExchangeAPI, as type: T.Type) -> Observable<T> {
+        return Observable.create { observer -> Disposable in
+            self.provider.request(api) { result in
+                switch result {
+                case .success(let response):
+                    let decoder = JSONDecoder().convertFromSnakeCase()
+                    do {
+                        let decodedData = try decoder.decode(T.self, from: response.data)
+                        observer.onNext(decodedData)
+                    } catch (let e) {
+                        print("error: \(e.localizedDescription)")
+                        observer.onError(e)
+                    }
+                case .failure(let error):
+                    print("error : \(error.localizedDescription)")
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
     static let endpointClosure = { (target: StackExchangeAPI) -> Endpoint in
         let url = target.baseURL.appendingPathComponent(target.path).absoluteString.removingPercentEncoding!
         let defaultEndpoint = Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
