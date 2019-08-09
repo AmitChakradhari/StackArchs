@@ -6,7 +6,6 @@ class AllQuestionsPage: UIViewController {
 
     var tableView: UITableView!
     let cellIdentifier = "allQuestionCell"
-    var allQuestions: [AllQuestionsItems]!
     var allQuestionPageViewModel: AllQuestionPageViewModel!
     var questionsObservable: Observable<[AllQuestionsItems]>!
     weak var coordinator: MainCoordinator?
@@ -29,7 +28,8 @@ class AllQuestionsPage: UIViewController {
 
         questionsObservable = allQuestionPageViewModel.getAllQuestions()
 
-        questionsObservable.bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: AllQuestionsTableViewCell.self)) { [weak self] (row, element, cell) in
+        questionsObservable
+            .bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: AllQuestionsTableViewCell.self)) { [weak self] (row, element, cell) in
 
             guard let strongSelf = self else { return }
 

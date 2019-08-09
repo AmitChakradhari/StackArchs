@@ -1,5 +1,12 @@
 import UIKit
+import RxCocoa
 import PromiseKit
+import RxSwift
+
+enum CellModel {
+    case question(QuestionItems)
+    case answer(AnswerItems)
+}
 
 class QuestionAnswerPageViewModel {
 
@@ -25,6 +32,11 @@ class QuestionAnswerPageViewModel {
             } .catch { error in
                 print("error: \(error.localizedDescription)")
         }
+    }
+
+    func getQuestionAnswer1(with questionId: Int) -> (Observable<[QuestionItems]>, Observable<[AnswerItems]>) {
+         return (networkManager.getResponse1(api: .question(id: questionId), as: GenericResponse<QuestionItems>.self),
+        networkManager.getResponse1(api: .answersOfQuestion(id: questionId), as: GenericResponse<AnswerItems>.self))
     }
 
 }

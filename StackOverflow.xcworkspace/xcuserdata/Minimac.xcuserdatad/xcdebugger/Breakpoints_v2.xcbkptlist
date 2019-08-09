@@ -277,13 +277,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
-            timestampString = "586883142.07727"
+            timestampString = "587085455.429327"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "QuestionAnswerPageVC"
-            landmarkType = "21">
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "moreCommentsButtonPressed(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -341,12 +341,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
-            timestampString = "586883142.077462"
+            timestampString = "587085455.429934"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "backButtonPressed(sender:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "setupView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
+            timestampString = "587085455.430288"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
+            timestampString = "587085469.553972"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

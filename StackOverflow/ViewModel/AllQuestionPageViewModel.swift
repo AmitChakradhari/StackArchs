@@ -5,8 +5,6 @@ import RxCocoa
 
 class AllQuestionPageViewModel {
 
-    var allQuestions: GenericResponse<AllQuestionsItems>!
-
     func getAllQuestions() -> Observable<[AllQuestionsItems]> {
         let networkManager = NetworkManager()
         return networkManager.getResponse1(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self)
@@ -24,10 +22,4 @@ struct AllQuestionPageCellData {
     let questionTitle: String
     let questionTag: String
     let createdDate: String
-    init(questionTitle: String, questionTag: String, createdDate: String) {
-        self.questionTitle = questionTitle
-        self.questionTag = questionTag
-        self.createdDate = createdDate
-    }
-    
 }
