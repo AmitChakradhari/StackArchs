@@ -3,11 +3,6 @@ import RxCocoa
 import PromiseKit
 import RxSwift
 
-enum CellModel {
-    case question(QuestionItems)
-    case answer(AnswerItems)
-}
-
 class QuestionAnswerPageViewModel {
 
     let questionCellIdentifier = "questionCell"
@@ -56,8 +51,8 @@ struct QuestionCellViewModel {
     var editedViewImageUrlString: String = ""
     var editedViewBadgesText: String = ""
 
-    init(questionData: GenericResponse<QuestionItems>) {
-        if let item = questionData.items.first {
+    init(questionData: [QuestionItems]) {
+        if let item = questionData.first {
             questionTitle = item.title
             questionDetail = item.bodyMarkdown
             answeredViewEditedAnsweredLabel = "asked \(DateUtilities.getDate(item.creationDate))"

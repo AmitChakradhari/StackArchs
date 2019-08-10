@@ -2,6 +2,26 @@ import UIKit
 import PromiseKit
 import RxSwift
 import RxCocoa
+import RxDataSources
+
+enum CellModel {
+    case question(QuestionItems)
+    case answer(AnswerItems)
+}
+
+struct SectionOfCustomData {
+    var header: String
+    var items: [Item]
+}
+extension SectionOfCustomData: SectionModelType {
+    init(original: SectionOfCustomData, items: [CellModel]) {
+        self = original
+        self.items = items
+    }
+
+    typealias Item = CellModel
+}
+
 
 class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 
@@ -11,12 +31,12 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
     var questionId: Int!
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
-    var questionData: GenericResponse<QuestionItems>!
+    var questionData: [QuestionItems]!
     var answersData: GenericResponse<AnswerItems>!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     var questionObserver: Observable<[QuestionItems]>!
     var answersObserver: Observable<[AnswerItems]>!
-    lazy var questionCellViewModel = QuestionCellViewModel(questionData: questionData)
+    var questionCellViewModel: QuestionCellViewModel(questionData: questionData)
     weak var coordinator: MainCoordinator?
 
     let disposeBag = DisposeBag()
@@ -26,43 +46,51 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 
         setupView()
 
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionOfCustomData>(
+            configureCell: { dataSource, tableView, indexPath, item in
+
+                switch item {
+                case .question(let question):
+                    print(question.body)
+                    return self.makeQuestionCell(from: question, tableView: self.tableView)
+                case .answer(let answer):
+                    print(answer.body)
+                    return self.makeAnswerCell(from: answer, tableView: self.tableView)
+                }
+        })
+
         questionAnswerPageViewModel = QuestionAnswerPageViewModel()
 
         questionObserver = questionAnswerPageViewModel.getQuestionAnswer1(with: questionId).0
 
         answersObserver = questionAnswerPageViewModel.getQuestionAnswer1(with: questionId).1
 
-        var observ: [CellModel] = []
+        var observ: [SectionOfCustomData] = []
 
-        let allObservers = Observable.of(observ)
+
+
 
         questionObserver.subscribe(onNext: { questionItem in
 
-            questionItem.forEach {
-                observ.append(CellModel.question($0))
+            let questionCellArray = questionItem.map {
+                CellModel.question($0)
             }
+            observ.append(SectionOfCustomData(header: "question", items: questionCellArray))
+            print(SectionOfCustomData(header: "question", items: questionCellArray))
 
         })
         .disposed(by: disposeBag)
 
         answersObserver.subscribe(onNext: { answerItem in
 
-            answerItem.forEach {
-                observ.append(CellModel.answer($0))
+            let answerCellArray = answerItem.map {
+                CellModel.answer($0)
             }
-
-            allObservers
-                .bind(to: self.tableView.rx.items) { table, index, element in
-                    switch element {
-                    case .question(let question):
-                        print(question.body)
-                        return self.makeQuestionCell(from: question, tableView: self.tableView)
-                    case .answer(let answer):
-                        print(answer.body)
-                        return self.makeAnswerCell(from: answer, tableView: self.tableView)
-                    }
-
-                }
+            observ.append(SectionOfCustomData(header: "answer", items: answerCellArray))
+            print(SectionOfCustomData(header: "answer", items: answerCellArray))
+            Observable.of(observ)
+                .bind(to: self.tableView.rx.items(dataSource: dataSource))
+                .disposed(by: self.disposeBag)
 
         })
         .disposed(by: disposeBag)

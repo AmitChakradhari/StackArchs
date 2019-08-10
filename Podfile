@@ -12,4 +12,5 @@ target 'StackOverflow' do
   pod 'PromiseKit'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxDataSources'
 end
