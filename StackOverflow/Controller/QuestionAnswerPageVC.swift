@@ -2,6 +2,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import RxGesture
 
 enum CellModel {
     case question(QuestionItems)
@@ -170,7 +171,14 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 
             for ids in 0...commentsCount-1 {
                 let userId: Int = comments[ids].owner?.userId ?? 0
-                sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
+                let commentView = comments[ids].commentView()
+                commentView.rx.tapGesture()
+                    .when(.recognized)
+                    .subscribe(onNext: { [weak self] gesture in
+                        self?.coordinator?.showProfilePage(userId: userId)
+                    })
+                    .disposed(by: disposeBag)
+                sv.addArrangedSubview(commentView)
             }
             cell.commentsStackView.moreCommentsButton.isHidden = true
             //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
@@ -192,9 +200,7 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
         let answerCellData = AnswerCellViewModel(answerData: item)
 
         cell.answerDetail.text = answerCellData.answerDetail
-//        if !index.isMultiple(of: 2) {
-//            cell.contentView.backgroundColor = .lightGray
-//        }
+
         cell.answeredView.editedAnsweredLabel.text = answerCellData.answeredViewEditedAnsweredLabel
         cell.answeredView.userName.text = answerCellData.answeredViewUserName
         cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.answeredViewImageUrlString) ?? URL(fileURLWithPath: "")))
@@ -214,7 +220,14 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
         guard let sv = cell.commentsStackView.subviews[0] as? UIStackView else { return cell }
         for ids in 0...comments.count-1 {
             let userId: Int = comments[ids].owner?.userId ?? 0
-            sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
+            let commentView = comments[ids].commentView()
+            commentView.rx.tapGesture()
+                .when(.recognized)
+                .subscribe(onNext: { [weak self] gesture in
+                    self?.coordinator?.showProfilePage(userId: userId)
+                })
+                .disposed(by: disposeBag)
+            sv.addArrangedSubview(commentView)
         }
         cell.commentsStackView.moreCommentsButton.isHidden = true
         //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
@@ -232,19 +245,16 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 }
 
 extension Comment {
-    func commentView(userId: Int, clickListener: @escaping ((Int) -> Void)) -> UIView {
+
+    func commentView() -> UIView {
         let view = UIView()
         view.backgroundColor = UIColor.green
-        let comment = CommentLabel()
-        comment.clickListener = clickListener
-        comment.userID = userId
+        let comment = UILabel()
         comment.translatesAutoresizingMaskIntoConstraints = false
         comment.numberOfLines = 0
         let str = "\(self.bodyMarkdown)-\(self.owner?.displayName ?? "Anonymous")"
         comment.text = str
         comment.isUserInteractionEnabled = true
-
-        comment.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleClick(sender:))))
 
         view.addSubview(comment)
         NSLayoutConstraint.activate([
@@ -257,16 +267,5 @@ extension Comment {
             ])
 
         return view
-    }
-
-    @objc func handleClick(sender: UITapGestureRecognizer) {
-        if let view = (sender.view as? CommentLabel), let userId = view.userID, let listener = view.clickListener {
-            listener(userId)
-        }
-    }
-
-    class CommentLabel: UILabel {
-        var clickListener: ((Int) -> Void)?
-        var userID: Int?
     }
 }

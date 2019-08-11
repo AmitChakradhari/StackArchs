@@ -13,4 +13,5 @@ target 'StackOverflow' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxDataSources'
+  pod "RxGesture"
 end
