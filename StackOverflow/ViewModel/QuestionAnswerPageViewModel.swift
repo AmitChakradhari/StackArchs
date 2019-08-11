@@ -1,6 +1,5 @@
 import UIKit
 import RxCocoa
-import PromiseKit
 import RxSwift
 
 class QuestionAnswerPageViewModel {
@@ -12,22 +11,6 @@ class QuestionAnswerPageViewModel {
 
     var questionData: GenericResponse<QuestionItems>!
     var answersData: GenericResponse<AnswerItems>!
-
-    func getQuestionAnswer(with questionId: Int, completion: @escaping() -> Void) {
-        networkManager.getResponse(api: .question(id: questionId), as: GenericResponse<QuestionItems>.self)
-            .then { [weak self] qData -> Promise<GenericResponse<AnswerItems>> in
-                guard let strongSelf = self else {
-                    return UIViewController.brokenPromise()
-                }
-                strongSelf.questionData = qData
-                return strongSelf.networkManager.getResponse(api: .answersOfQuestion(id: questionId), as: GenericResponse<AnswerItems>.self)
-            } .done { [weak self] ansData in
-                self?.answersData = ansData
-                completion()
-            } .catch { error in
-                print("error: \(error.localizedDescription)")
-        }
-    }
 
     func getQuestionAnswer1(with questionId: Int) -> (Observable<[QuestionItems]>, Observable<[AnswerItems]>) {
          return (networkManager.getResponse1(api: .question(id: questionId), as: GenericResponse<QuestionItems>.self),

@@ -1,19 +1,13 @@
 import UIKit
-import PromiseKit
+import RxSwift
+import RxCocoa
 
 class UserProfilePageViewModel {
 
-    var user: GenericResponse<UserItem>!
-
-    func getUser(userId: Int, completion: @escaping (GenericResponse<UserItem>) -> Void) {
+    func getUser(userId: Int) -> Observable<[UserItem]> {
         let networkManager = NetworkManager()
-        networkManager.getResponse(api: .user(id: userId), as: GenericResponse<UserItem>.self)
-            .done { [weak self] user in
-                self?.user = user
-                completion(user)
-            } .catch { error in
-                print("error: \(error.localizedDescription)")
-        }
+        return networkManager.getResponse1(api: .user(id: userId), as: GenericResponse<UserItem>.self)
+
     }
 
     func getBadges(badges: BadgeCount?) -> [UIView] {

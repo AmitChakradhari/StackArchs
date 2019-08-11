@@ -277,11 +277,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
-            timestampString = "587246402.308828"
+            timestampString = "587249273.231985"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "moreCommentsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -331,22 +331,6 @@
             startingLineNumber = "17"
             endingLineNumber = "17"
             landmarkName = "application(_:didFinishLaunchingWithOptions:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StackOverflow/Controller/QuestionAnswerPageVC.swift"
-            timestampString = "587246402.3095911"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

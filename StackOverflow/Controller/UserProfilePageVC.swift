@@ -1,11 +1,16 @@
 import UIKit
-import PromiseKit
+import RxSwift
+import RxCocoa
+
 class UserProfilePageViewController: UIViewController {
 
     var userProfilePageView: UserProfilePageView!
     var userId: Int
     var userProfilePageViewModel: UserProfilePageViewModel!
+    var userObservable: Observable<[UserItem]>!
     weak var coordinator: MainCoordinator?
+
+    let disposeBag = DisposeBag()
 
     init(userId: Int) {
         self.userId = userId
@@ -24,15 +29,18 @@ class UserProfilePageViewController: UIViewController {
 
         userProfilePageViewModel = UserProfilePageViewModel()
 
-        userProfilePageViewModel.getUser(userId: userId) { [weak self] user in
-            if let imageUrl = URL(string: user.items[0].profileImage ?? "") {
+        userObservable = userProfilePageViewModel.getUser(userId: userId)
+
+        userObservable.subscribe(onNext: { [weak self] userArray in
+            if let user = userArray.first, let imageUrl = URL(string: user.profileImage ?? "") {
                 self?.userProfilePageView.imageView.image = try? UIImage(data: Data(contentsOf: imageUrl))
-                self?.userProfilePageView.reputationLabel.text = "Reputation - \(user.items[0].reputation ?? 0)"
-                for view in self?.userProfilePageViewModel.getBadges(badges: user.items[0].badgeCounts) ?? [] {
+                self?.userProfilePageView.reputationLabel.text = "Reputation - \(user.reputation ?? 0)"
+                for view in self?.userProfilePageViewModel.getBadges(badges: user.badgeCounts) ?? [] {
                     self?.userProfilePageView.badgeStackView.addArrangedSubview(view)
                 }
             }
-        }
+        })
+        .disposed(by: disposeBag)
 
     }
 

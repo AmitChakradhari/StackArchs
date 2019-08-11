@@ -1,5 +1,4 @@
 import UIKit
-import PromiseKit
 import RxSwift
 import RxCocoa
 

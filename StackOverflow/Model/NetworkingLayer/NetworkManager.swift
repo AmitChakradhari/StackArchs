@@ -6,38 +6,6 @@ import RxCocoa
 
 struct NetworkManager {
 
-//    enum NetworkCall {
-//        case AllQuestion
-//    }
-//
-//    func getResponse<T>(_ call: NetworkCall) -> Promise<T> {
-//        switch call {
-//        case .AllQuestion:
-//            return getResponse(api: .allQuestions, as: GenericResponse<AllQuestionsItems>.self) as! Promise<T>
-//        }
-//    }
-
-    func getResponse<T: Codable>(api: StackExchangeAPI, as type: T.Type) -> Promise<T> {
-        return Promise { seal in
-            provider.request(api) { result in
-                switch result {
-                case .success(let response):
-                    let decoder = JSONDecoder().convertFromSnakeCase()
-                    do {
-                        let decodedData = try decoder.decode(T.self, from: response.data)
-                        seal.fulfill(decodedData)
-                    } catch (let e) {
-                        print("error: \(e.localizedDescription)")
-                        seal.reject(e)
-                    }
-                case .failure(let error):
-                    print("error : \(error.localizedDescription)")
-                    seal.reject(error)
-                }
-            }
-        }
-    }
-
     func getResponse1<T: Codable>(api: StackExchangeAPI, as type: GenericResponse<T>.Type) -> Observable<[T]> {
         return Observable.create { observer -> Disposable in
             self.provider.request(api) { result in

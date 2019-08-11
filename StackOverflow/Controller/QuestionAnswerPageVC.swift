@@ -1,5 +1,4 @@
 import UIKit
-import PromiseKit
 import RxSwift
 import RxCocoa
 import RxDataSources
@@ -32,11 +31,10 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
     var questionData: [QuestionItems]!
-    var answersData: [AnswerItems]!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     var questionObserver: Observable<[QuestionItems]>!
     var answersObserver: Observable<[AnswerItems]>!
-    var questionCellViewModel: QuestionCellViewModel!//(questionData: questionData)
+    var questionCellViewModel: QuestionCellViewModel!
     weak var coordinator: MainCoordinator?
 
     let disposeBag = DisposeBag()
@@ -67,16 +65,12 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 
         var observ: [SectionOfCustomData] = []
 
-
-
-
         questionObserver.subscribe(onNext: { [weak self] questionItem in
 
             let questionCellArray = questionItem.map {
                 CellModel.question($0)
             }
             observ.append(SectionOfCustomData(header: "question", items: questionCellArray))
-            print(SectionOfCustomData(header: "question", items: questionCellArray))
             self?.questionCellViewModel = QuestionCellViewModel(questionData: questionItem)
 
         })
@@ -88,7 +82,6 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
                 CellModel.answer($0)
             }
             observ.append(SectionOfCustomData(header: "answer", items: answerCellArray))
-            print(SectionOfCustomData(header: "answer", items: answerCellArray))
             Observable.of(observ)
                 .bind(to: self.tableView.rx.items(dataSource: dataSource))
                 .disposed(by: self.disposeBag)
@@ -111,8 +104,6 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
         let questionAnswerPageView = QuestionAnswerPageView(frame: CGRect(x: 0, y: barHeight/2, width: displayWidth, height: displayHeight - barHeight/2))
 
         tableView = questionAnswerPageView.tableView
-        //tableView.delegate = self
-        //tableView.dataSource = self
         tableView.register(QuestionTableViewCell.self, forCellReuseIdentifier: questionCellIdentifier)
         tableView.register(AnswerTableViewCell.self, forCellReuseIdentifier: answerCellIdentifier)
 
@@ -239,116 +230,6 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
     }
 
 }
-
-//extension QuestionAnswerPageVC: UITableViewDelegate, UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard answersData != nil else {
-//            return 1
-//        }
-//        return answersData.items.count // +1 causes app to crash
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if indexPath.row == 0 {
-//            // swiftlint:disable force_cast
-//            let cell = tableView.dequeueReusableCell(withIdentifier: questionCellIdentifier, for: indexPath) as! QuestionTableViewCell
-//            // swiftlint:enable force_cast
-//            guard questionData != nil else {
-//                return cell
-//            }
-//            if cell.contentView.bounds.width >= 450 {
-//                cell.editors.axis = .horizontal
-//            } else {
-//                cell.editors.axis = .vertical
-//            }
-//
-//            if let item = questionData.items.first {
-//                cell.questionTitle.text = questionCellViewModel.questionTitle
-//                cell.questionDetail.text = questionCellViewModel.questionDetail
-//                cell.answeredView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
-//                cell.answeredView.userName.text = questionCellViewModel.answeredViewUserName
-//                cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.answeredViewImageUrlString) ?? URL(fileURLWithPath: "")))
-//                cell.answeredView.badges.text = questionCellViewModel.answeredViewBadgesText
-//
-//                if item.lastEditor != nil {
-//                    cell.editedView.isHidden = false
-//                    cell.editedView.editedAnsweredLabel.text = questionCellViewModel.answeredViewEditedAnsweredLabel
-//                    cell.editedView.userName.text = questionCellViewModel.editedViewUserName
-//                    cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: questionCellViewModel.editedViewImageUrlString) ?? URL(fileURLWithPath: "")))
-//                    cell.editedView.badges.text = questionCellViewModel.editedViewBadgesText
-//                } else {
-//                    cell.editedView.isHidden = true
-//                }
-//                let count = item.comments?.count
-//                guard let commentsCount = count, let comments = item.comments else { return cell }
-//                guard commentsCount > 0 else { return cell }
-//                guard let sv = cell.commentsStackView.subviews[0] as? UIStackView else { return cell }
-//
-//                for ids in 0...commentsCount-1 {
-//                    let userId: Int = comments[ids].owner?.userId ?? 0
-//                    sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
-//                }
-//                cell.commentsStackView.moreCommentsButton.isHidden = true
-//                //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
-//                cell.commentsStackView.moreCommentsButton.commentStackView = cell.commentsStackView
-//                cell.commentsStackView.moreCommentsButton.comments = comments
-//            }
-//            return cell
-//        } else {
-//            // swiftlint:disable force_cast
-//            let cell = tableView.dequeueReusableCell(withIdentifier: answerCellIdentifier, for: indexPath) as! AnswerTableViewCell
-//            // swiftlint:enable force_cast
-//            guard answersData != nil && indexPath.row > 0 else {
-//                return cell
-//            }
-//
-//            if cell.contentView.bounds.width >= 450 {
-//                cell.editors.axis = .horizontal
-//            } else {
-//                cell.editors.axis = .vertical
-//            }
-//            let item = answersData.items[indexPath.row]
-//            let answerCellData = AnswerCellViewModel(answerData: item)
-//
-//            cell.answerDetail.text = answerCellData.answerDetail
-//            if !indexPath.row.isMultiple(of: 2) {
-//                cell.contentView.backgroundColor = .lightGray
-//            }
-//            cell.answeredView.editedAnsweredLabel.text = answerCellData.answeredViewEditedAnsweredLabel
-//            cell.answeredView.userName.text = answerCellData.answeredViewUserName
-//            cell.answeredView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.answeredViewImageUrlString) ?? URL(fileURLWithPath: "")))
-//            cell.answeredView.badges.text = answerCellData.answeredViewBadgesText
-//
-//            if item.lastEditor != nil {
-//                cell.editedView.isHidden = false
-//                cell.editedView.editedAnsweredLabel.text = answerCellData.editedViewEditedAnsweredLabel
-//                cell.editedView.userName.text = answerCellData.editedViewUserName
-//                cell.editedView.userImage.image = try? UIImage(data: Data(contentsOf: URL(string: answerCellData.editedViewImageUrlString) ?? URL(fileURLWithPath: "")))
-//                cell.editedView.badges.text = answerCellData.editedViewBadgesText
-//            } else {
-//                cell.editedView.isHidden = true
-//            }
-//            guard let comments = item.comments else { return cell }
-//            guard comments.count > 0 else { return cell }
-//            guard let sv = cell.commentsStackView.subviews[0] as? UIStackView else { return cell }
-//            for ids in 0...comments.count-1 {
-//                let userId: Int = comments[ids].owner?.userId ?? 0
-//                sv.addArrangedSubview(comments[ids].commentView(userId: userId, clickListener: getClickListener(userID: userId)))
-//            }
-//            cell.commentsStackView.moreCommentsButton.isHidden = true
-//            //cell.commentsStackView.moreCommentsButton.isHidden = commentsCount < 4 ? true : false
-//            cell.commentsStackView.moreCommentsButton.commentStackView = cell.commentsStackView
-//            cell.commentsStackView.moreCommentsButton.comments = comments
-//            return cell
-//        }
-//    }
-//
-//    func getClickListener(userID: Int) -> ((Int) -> Void) {
-//        return ({ [weak self] userId in
-//            self?.coordinator?.showProfilePage(userId: userId)
-//        })
-//    }
-//}
 
 extension Comment {
     func commentView(userId: Int, clickListener: @escaping ((Int) -> Void)) -> UIView {
