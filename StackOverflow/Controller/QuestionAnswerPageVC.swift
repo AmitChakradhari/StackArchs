@@ -32,11 +32,11 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
     let questionCellIdentifier = "questionCell"
     let answerCellIdentifier = "answerCell"
     var questionData: [QuestionItems]!
-    var answersData: GenericResponse<AnswerItems>!
+    var answersData: [AnswerItems]!
     var questionAnswerPageViewModel: QuestionAnswerPageViewModel!
     var questionObserver: Observable<[QuestionItems]>!
     var answersObserver: Observable<[AnswerItems]>!
-    var questionCellViewModel: QuestionCellViewModel(questionData: questionData)
+    var questionCellViewModel: QuestionCellViewModel!//(questionData: questionData)
     weak var coordinator: MainCoordinator?
 
     let disposeBag = DisposeBag()
@@ -70,13 +70,14 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
 
 
 
-        questionObserver.subscribe(onNext: { questionItem in
+        questionObserver.subscribe(onNext: { [weak self] questionItem in
 
             let questionCellArray = questionItem.map {
                 CellModel.question($0)
             }
             observ.append(SectionOfCustomData(header: "question", items: questionCellArray))
             print(SectionOfCustomData(header: "question", items: questionCellArray))
+            self?.questionCellViewModel = QuestionCellViewModel(questionData: questionItem)
 
         })
         .disposed(by: disposeBag)
