@@ -236,12 +236,6 @@ class QuestionAnswerPageVC: UIViewController, UITableViewDelegate {
         return cell
     }
 
-    private func getClickListener(userID: Int) -> ((Int) -> Void) {
-        return ({ [weak self] userId in
-            self?.coordinator?.showProfilePage(userId: userId)
-        })
-    }
-
 }
 
 extension Comment {
